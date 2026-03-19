@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Job Sheet Dashboard — View Only</title>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -464,16 +467,23 @@ async function loadDataFromUrl() {
   if (gistMatch) {
     const gistId = gistMatch[1];
     try {
-      const res = await fetch(`https://api.github.com/gists/${gistId}`, {
-        headers: { 'Accept': 'application/vnd.github+json' }
+      // เพิ่ม _t= เพื่อบังคับ bypass cache ทุกครั้ง
+      const bust = Date.now();
+      const res = await fetch(`https://api.github.com/gists/${gistId}?_t=${bust}`, {
+        headers: {
+          'Accept': 'application/vnd.github+json',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        },
+        cache: 'no-store'
       });
       if (!res.ok) throw new Error('Gist ไม่พบ หรือหมดอายุ (status ' + res.status + ')');
       const gist = await res.json();
       const file = gist.files['jobsheet_data.json'];
       if (!file) throw new Error('ไม่พบไฟล์ข้อมูลใน Gist');
-      // ถ้า content ถูก truncate ให้ fetch raw_url
+      // ถ้า content ถูก truncate ให้ fetch raw_url พร้อม cache-bust ด้วย
       const json = file.truncated
-        ? await fetch(file.raw_url).then(r => r.text())
+        ? await fetch(file.raw_url + '?_t=' + bust, { cache: 'no-store' }).then(r => r.text())
         : file.content;
       const parsed = JSON.parse(json);
       if (!Array.isArray(parsed) || !parsed.length) throw new Error('ข้อมูลว่างเปล่า');
