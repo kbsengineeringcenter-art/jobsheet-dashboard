@@ -454,60 +454,75 @@ const PALETTE = ['rgba(108,63,197,.75)','rgba(249,168,212,.75)','rgba(186,230,25
   'rgba(253,186,116,.75)','rgba(134,239,172,.75)','rgba(165,243,252,.75)',
   'rgba(254,202,202,.75)','rgba(167,243,208,.75)','rgba(221,214,254,.75)'];
 
-// ===== URL DATA LOADING =====
+// ===== URL DATA LOADING (GitHub Gist) =====
 async function loadDataFromUrl() {
   const hash = window.location.hash;
-  if (!hash || !hash.startsWith('#data=')) return false;
-  try {
-    const encoded = hash.slice(6); // strip '#data='
-    let json;
+  if (!hash) return false;
 
-    if (encoded.charAt(0) === 'r') {
-      // raw base64 (no compression fallback)
-      const b64 = encoded.slice(1).replace(/-/g,'+').replace(/_/g,'/');
-      json = decodeURIComponent(escape(atob(b64)));
-    } else {
-      // deflate-raw compressed
-      const b64 = encoded.replace(/-/g,'+').replace(/_/g,'/');
-      const binary = atob(b64);
-      const bytes = new Uint8Array(binary.length);
-      for (let i=0; i<binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  // --- Gist mode: #gist=<id> ---
+  const gistMatch = hash.match(/^#gist=([a-f0-9]+)$/);
+  if (gistMatch) {
+    const gistId = gistMatch[1];
+    try {
+      const res = await fetch(`https://api.github.com/gists/${gistId}`, {
+        headers: { 'Accept': 'application/vnd.github+json' }
+      });
+      if (!res.ok) throw new Error('Gist ไม่พบ หรือหมดอายุ (status ' + res.status + ')');
+      const gist = await res.json();
+      const file = gist.files['jobsheet_data.json'];
+      if (!file) throw new Error('ไม่พบไฟล์ข้อมูลใน Gist');
+      // ถ้า content ถูก truncate ให้ fetch raw_url
+      const json = file.truncated
+        ? await fetch(file.raw_url).then(r => r.text())
+        : file.content;
+      const parsed = JSON.parse(json);
+      if (!Array.isArray(parsed) || !parsed.length) throw new Error('ข้อมูลว่างเปล่า');
+      ALL_DATA = parsed;
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      return parsed.length;
+    } catch(e) {
+      console.error('Gist load error:', e);
+      showToast('❌ โหลดข้อมูลจาก Gist ไม่สำเร็จ: ' + e.message);
+      return false;
+    }
+  }
 
-      if (typeof DecompressionStream !== 'undefined') {
+  // --- Legacy mode: #data=<base64> (fallback) ---
+  if (hash.startsWith('#data=')) {
+    try {
+      const encoded = hash.slice(6);
+      let json;
+      if (encoded.charAt(0) === 'r') {
+        const b64 = encoded.slice(1).replace(/-/g,'+').replace(/_/g,'/');
+        json = decodeURIComponent(escape(atob(b64)));
+      } else {
+        const b64 = encoded.replace(/-/g,'+').replace(/_/g,'/');
+        const binary = atob(b64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
         const ds = new DecompressionStream('deflate-raw');
         const writer = ds.writable.getWriter();
-        writer.write(bytes);
-        writer.close();
+        writer.write(bytes); writer.close();
         const chunks = [];
         const reader = ds.readable.getReader();
-        while (true) {
-          const {done, value} = await reader.read();
-          if (done) break;
-          chunks.push(value);
-        }
-        const total = chunks.reduce((n,c)=>n+c.length, 0);
-        const result = new Uint8Array(total);
-        let off = 0;
+        while(true){const{done,value}=await reader.read();if(done)break;chunks.push(value);}
+        const total=chunks.reduce((n,c)=>n+c.length,0);
+        const result=new Uint8Array(total);let off=0;
         chunks.forEach(c=>{result.set(c,off);off+=c.length;});
         json = new TextDecoder().decode(result);
-      } else {
-        showToast('⚠️ Browser ไม่รองรับ DecompressionStream');
-        return false;
       }
+      const parsed = JSON.parse(json);
+      if (!Array.isArray(parsed) || !parsed.length) return false;
+      ALL_DATA = parsed;
+      history.replaceState(null,'',window.location.pathname+window.location.search);
+      return parsed.length;
+    } catch(e) {
+      console.error('URL data load error:', e);
+      return false;
     }
-
-    const parsed = JSON.parse(json);
-    if (!Array.isArray(parsed) || parsed.length === 0) return false;
-
-    ALL_DATA = parsed;
-    // ลบ hash ออกจาก URL โดยไม่ reload
-    history.replaceState(null, '', window.location.pathname + window.location.search);
-    return parsed.length;
-  } catch(e) {
-    console.error('URL data load error:', e);
-    showToast('❌ โหลดข้อมูลจาก URL ไม่สำเร็จ: ' + e.message);
-    return false;
   }
+
+  return false;
 }
 
 // ===== INIT =====
