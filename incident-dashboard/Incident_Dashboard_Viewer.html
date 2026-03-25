@@ -3,9 +3,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Incident Report Dashboard</title>
 <script>const IS_OWNER=false;</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script></head><body>&lt;\/script&gt;
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>&lt;\/script&gt;
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>&lt;\/script&gt;
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap');
@@ -231,8 +231,8 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
 @keyframes spin{to{transform:rotate(360deg)}}
 
 </style>
-
-
+</head>
+<body>
 
 <header>
   <div class="logo">
@@ -2736,7 +2736,7 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
 
 <footer>Incident Dashboard · ข้อมูลจาก Incident_Report_2568-69.xlsx · <span id="fdate">25 มีนาคม 2569</span></footer>
 
-<div class="modal-overlay open" id="modal-overlay" onclick="if(event.target===this)closeSend()">
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeSend()">
   <div class="send-modal">
     <button class="send-close" onclick="closeSend()">✕</button>
     <h3>🔗 แชร์ข้อมูลให้ Viewer</h3>
@@ -2804,7 +2804,7 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
       </div>
     </div>
 
-    <button onclick="closeSend()" style="display:block;width:100%;padding:10px;border-radius:8px;background:var(--g100);border:1px solid var(--g200);color:var(--g700);font-family:'Sarabun',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;margin-top:6px;transition:all .18s" onmouseover="this.style.background='var(--g200)'" onmouseout="this.style.background='var(--g100)'">ปิด</button>
+    <button onclick="closeSend()" style="display: block; width: 100%; padding: 10px; border-radius: 8px; background: var(--g100); border: 1px solid var(--g200); color: var(--g700); font-family: Sarabun, sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; margin-top: 6px; transition: 0.18s;" onmouseover="this.style.background='var(--g200)'" onmouseout="this.style.background='var(--g100)'">ปิด</button>
   </div>
 </div>
 <div id="toast"></div>
@@ -3644,9 +3644,16 @@ function saveGistToken(){
 }
 
 function buildViewerHtml(){
+  // ปิด modal ก่อน snapshot เพื่อไม่ให้ติดไปใน viewer
+  document.getElementById('modal-overlay').classList.remove('open');
+
   let h = document.documentElement.outerHTML;
   h = h.replace('<'+'script>const IS_OWNER=true;<'+'/script>','<'+'script>const IS_OWNER=false;<'+'/script>');
+  // ล้าง class open ออกจาก modal ทุกตัว (กันกรณี outerHTML snap ก่อน DOM update)
   h = h.replace(/id="modal-overlay"([^>]*?)class="([^"]*?)\bopen\b([^"]*?)"/g,'id="modal-overlay"$1class="$2$3"');
+  h = h.replace(/id="form-overlay"([^>]*?)class="([^"]*?)\bopen\b([^"]*?)"/g,'id="form-overlay"$1class="$2$3"');
+  // ล้าง double closing script tags ที่อาจติดมาจาก innerHTML
+  h = h.replace(/<\/script><\\\/script>/g, '<\/script>');
   const allRawJson = JSON.stringify(RAW_ALL);
   h = h.replace(/const RAW_ALL\s*=\s*\{[^}]*\{[^\}]*\}[^}]*\}/s, 'const RAW_ALL_INJECTED='+allRawJson);
   const injectScript = `<script>
