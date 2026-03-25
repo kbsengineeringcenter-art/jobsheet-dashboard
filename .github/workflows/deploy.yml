@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare dist folder
+        run: |
+          mkdir -p dist
+          cp -r . dist/ 2>/dev/null || true
+          sed -i "s|__GITHUB_TOKEN__|${{ secrets.GIST_TOKEN }}|g" dist/JobSheet_Owner.html
+          BUILD_TS=$(date +%s%3N)
+          sed -i "s|const HTML_BUILT_AT = [0-9]*;|const HTML_BUILT_AT = ${BUILD_TS};|g" dist/JobSheet_Owner.html
+          echo "✅ Injected token and build timestamp: ${BUILD_TS}"
+
+      - name: Verify injection (safe check)
+        run: |
+          if grep -q "__GITHUB_TOKEN__" dist/JobSheet_Owner.html; then
+            echo "❌ ERROR: Token was NOT injected. Check if secret GIST_TOKEN is set."
+            exit 1
+          else
+            echo "✅ Token injected successfully"
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
