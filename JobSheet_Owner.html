@@ -239,7 +239,7 @@ tr:hover td{background:#faf8ff}
   /* ===== Topbar ===== */
   .topbar {
     position:static !important; padding:5px 14px; height:auto;
-    background:linear-gradient(135deg,#0f2044,#1a3a6b) !important;
+    background:linear-gradient(135deg,#0f2044,var(--purple)) !important;
     -webkit-print-color-adjust:exact; print-color-adjust:exact;
     border-radius:0 !important; margin-bottom:6px;
   }
@@ -613,10 +613,10 @@ let calMode = 'recv'; // recv | done  (controls both month bar and calendar grid
 const MONTHS_TH = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน',
   'กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 const MONTHS_SHORT = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-const PALETTE = ['rgba(26,58,107,.8)','rgba(240,165,0,.8)','rgba(44,84,153,.8)',
-  'rgba(16,185,129,.8)','rgba(30,100,180,.8)','rgba(224,92,0,.8)',
-  'rgba(15,140,100,.8)','rgba(90,130,200,.8)','rgba(200,130,0,.8)',
-  'rgba(60,110,180,.8)','rgba(180,70,0,.8)','rgba(10,80,160,.8)'];
+const PALETTE = ['rgba(26,58,107,.75)','rgba(249,168,212,.75)','rgba(186,230,253,.75)',
+  'rgba(110,231,183,.75)','rgba(252,211,77,.75)','rgba(196,181,253,.75)',
+  'rgba(253,186,116,.75)','rgba(134,239,172,.75)','rgba(165,243,252,.75)',
+  'rgba(254,202,202,.75)','rgba(167,243,208,.75)','rgba(221,214,254,.75)'];
 
 // ===== INIT =====
 
@@ -997,7 +997,7 @@ function mkChart(id, type, labels, datasets, opts={}) {
     : { // bar: แสดงบนแท่ง
         display: ctx => ctx.dataset.data[ctx.dataIndex] > 0,
         anchor: 'end', align: 'end', offset: 2,
-        color: '#1a3a6b',
+        color: '#0f2044',
         font: { family: 'Sarabun', weight: '700', size: 10 },
         formatter: v => v > 0 ? v.toLocaleString() : ''
       };
@@ -1750,10 +1750,15 @@ function processFile(file){
         const ws=wb.Sheets[name];
         const raw=XLSX.utils.sheet_to_json(ws,{defval:''});
         raw.forEach(r=>{
-          const done=r['แล้วเสร็จ'],inprog=r['กำลังดำเนินการ'];
-          let status='ไม่ระบุ';
-          try{if(parseFloat(String(inprog).trim())===1)status='กำลังดำเนินการ';}catch(e){}
-          try{if(parseFloat(String(done).trim())===1)status='แล้วเสร็จ';}catch(e){}
+          const rawStatus=String(r['สถานะ']||'').trim();
+          let status='กำลังดำเนินการ';
+          if(rawStatus==='แล้วเสร็จ')status='แล้วเสร็จ';
+          else if(rawStatus==='กำลังดำเนินการ')status='กำลังดำเนินการ';
+          else{
+            const done=r['แล้วเสร็จ'],inprog=r['กำลังดำเนินการ'];
+            try{if(parseFloat(String(inprog).trim())===1)status='กำลังดำเนินการ';}catch(e){}
+            try{if(parseFloat(String(done).trim())===1)status='แล้วเสร็จ';}catch(e){}
+          }
           const fmtDate=v=>{
             if(!v)return'';
             if(v instanceof Date)return(v.getDate()+'').padStart(2,'0')+'/'+(v.getMonth()+1+'').padStart(2,'0')+'/'+v.getFullYear();
