@@ -2804,10 +2804,10 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
       </div>
     </div>
 
-    <button onclick="closeSend()" style="display: block; width: 100%; padding: 10px; border-radius: 8px; background: var(--g100); border: 1px solid var(--g200); color: var(--g700); font-family: Sarabun, sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; margin-top: 6px; transition: 0.18s;" onmouseover="this.style.background='var(--g200)'" onmouseout="this.style.background='var(--g100)'">ปิด</button>
+    <button onclick="closeSend()" style="display:block;width:100%;padding:10px;border-radius:8px;background:var(--g100);border:1px solid var(--g200);color:var(--g700);font-family:'Sarabun',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;margin-top:6px;transition:all .18s" onmouseover="this.style.background='var(--g200)'" onmouseout="this.style.background='var(--g100)'">ปิด</button>
   </div>
 </div>
-<div id="toast" class="">✅ อัปโหลดสำเร็จ — URL พร้อมส่งแล้ว</div>
+<div id="toast"></div>
 
 <script>
 const IS_OWNER_FLAG = (typeof IS_OWNER !== 'undefined') ? IS_OWNER : true;
@@ -3662,18 +3662,32 @@ function buildViewerHtml(){
     try{
       ['incident_gist_token','incident_gist_id','incident_gist_url'].forEach(k=>localStorage.removeItem(k));
     }catch(e){}
-    // inject RAW_ALL data
-    try{
-      const inj=RAW_ALL_INJECTED;
-      if(inj && typeof inj==='object'){
-        Object.keys(inj).forEach(yr=>{
-          if(window.RAW_ALL && window.RAW_ALL[yr]){
-            window.RAW_ALL[yr].length=0;
-            inj[yr].forEach(r=>window.RAW_ALL[yr].push(r));
-          }
-        });
-      }
-    }catch(e){console.warn('inject RAW_ALL failed',e);}
+    // inject RAW_ALL data — รอ DOMContentLoaded เพื่อให้ charts render ถูกต้อง
+    function doInject(){
+      try{
+        const inj=RAW_ALL_INJECTED;
+        if(inj && typeof inj==='object'){
+          Object.keys(inj).forEach(yr=>{
+            if(window.RAW_ALL && window.RAW_ALL[yr]){
+              window.RAW_ALL[yr].length=0;
+              inj[yr].forEach(r=>window.RAW_ALL[yr].push(r));
+            }
+          });
+        }
+        // re-render หลัง inject
+        if(typeof fillFilters==='function') fillFilters();
+        if(typeof render==='function' && window.FD) render(window.FD);
+        if(typeof buildCross==='function') buildCross();
+        if(typeof buildDowntime==='function') buildDowntime();
+      }catch(e){console.warn('inject RAW_ALL failed',e);}
+    }
+    if(document.readyState==='loading'){
+      document.addEventListener('DOMContentLoaded', function(){
+        setTimeout(doInject, 200);
+      });
+    } else {
+      setTimeout(doInject, 200);
+    }
   })();
   <\/script>`;
   h = h.replace(/let RAW = \[.*?\];/s,'let RAW = '+JSON.stringify(RAW)+';');
@@ -3683,18 +3697,32 @@ function buildViewerHtml(){
     try{
       ['incident_gist_token','incident_gist_id','incident_gist_url'].forEach(k=>localStorage.removeItem(k));
     }catch(e){}
-    // inject RAW_ALL data
-    try{
-      const inj=RAW_ALL_INJECTED;
-      if(inj && typeof inj==='object'){
-        Object.keys(inj).forEach(yr=>{
-          if(window.RAW_ALL && window.RAW_ALL[yr]){
-            window.RAW_ALL[yr].length=0;
-            inj[yr].forEach(r=>window.RAW_ALL[yr].push(r));
-          }
-        });
-      }
-    }catch(e){console.warn('inject RAW_ALL failed',e);}
+    // inject RAW_ALL data — รอ DOMContentLoaded เพื่อให้ charts render ถูกต้อง
+    function doInject(){
+      try{
+        const inj=RAW_ALL_INJECTED;
+        if(inj && typeof inj==='object'){
+          Object.keys(inj).forEach(yr=>{
+            if(window.RAW_ALL && window.RAW_ALL[yr]){
+              window.RAW_ALL[yr].length=0;
+              inj[yr].forEach(r=>window.RAW_ALL[yr].push(r));
+            }
+          });
+        }
+        // re-render หลัง inject
+        if(typeof fillFilters==='function') fillFilters();
+        if(typeof render==='function' && window.FD) render(window.FD);
+        if(typeof buildCross==='function') buildCross();
+        if(typeof buildDowntime==='function') buildDowntime();
+      }catch(e){console.warn('inject RAW_ALL failed',e);}
+    }
+    if(document.readyState==='loading'){
+      document.addEventListener('DOMContentLoaded', function(){
+        setTimeout(doInject, 200);
+      });
+    } else {
+      setTimeout(doInject, 200);
+    }
   })();
   </script>
 </body>', injectScript+'\n</body>');
