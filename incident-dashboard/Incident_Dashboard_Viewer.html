@@ -333,7 +333,7 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
     <div class="thead">
       <div><div class="ttl">รายละเอียดเหตุการณ์</div><div style="font-size:.7rem;color:var(--g400);margin-top:2px" id="tcount"></div></div>
       <div style="display:flex;align-items:center;gap:9px">
-        <input class="tsearch" type="text" placeholder="🔍 ค้นหา..." id="search-box" autocomplete="off" oninput="applyFilters()">
+        <input class="tsearch" type="search" placeholder="🔍 ค้นหา..." id="search-box" autocomplete="off" name="search-off" readonly="" onfocus="this.removeAttribute('readonly')" oninput="applyFilters()">
         <button class="btn-add owner-only" id="btn-add-row" style="display:none">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           เพิ่มรายการ
@@ -595,6 +595,9 @@ function saveActiveYear(){ saveToStorage(ACTIVE_YEAR); }
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  // ล้าง search box ทุกครั้งที่โหลด
+  const sb = document.getElementById('search-box');
+  if(sb){ sb.value = ''; sb.setAttribute('autocomplete','off'); }
   if (!IS_OWNER_FLAG) {
     document.getElementById('owner-btns').style.display = 'none';
     document.getElementById('viewer-btns').style.display = 'flex';
