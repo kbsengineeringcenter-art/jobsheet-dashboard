@@ -243,7 +243,7 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
 <header>
   <div class="logo">
     <div class="logo-icon">📋</div>
-    <div><h1>Incident Report Dashboard</h1><span>ระบบสรุปเหตุการณ์ · <span id="last-updated"></span></span></div>
+    <div><h1>Incident Report Dashboard</h1><span>ระบบสรุปเหตุการณ์ · <span id="last-updated">26 มีนาคม 2569</span></span></div>
   </div>
   <div class="hact" id="action-area">
     <input type="file" id="file-input" accept=".xlsx,.xls" style="display:none" onchange="handleFile(this)">
@@ -310,37 +310,1409 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
     <div class="ms-wrap" id="ms-status-wrap">
       <button type="button" class="ms-btn" id="ms-status-btn" onclick="toggleMsDropdown('status')">Status ทั้งหมด</button>
       <div class="ms-dropdown" id="ms-status-drop">
-        <div id="ms-status-items"></div>
+        <div id="ms-status-items"><div class="ms-item"><input type="checkbox" id="ms-cb-ACKNOWLEDGED" value="ACKNOWLEDGED"><label for="ms-cb-ACKNOWLEDGED">ACKNOWLEDGED</label></div><div class="ms-item"><input type="checkbox" id="ms-cb-FINISHED" value="FINISHED"><label for="ms-cb-FINISHED">FINISHED</label></div><div class="ms-item"><input type="checkbox" id="ms-cb-HISTORY" value="HISTORY"><label for="ms-cb-HISTORY">HISTORY</label></div><div class="ms-item"><input type="checkbox" id="ms-cb-REQUEST" value="REQUEST"><label for="ms-cb-REQUEST">REQUEST</label></div><div class="ms-item"><input type="checkbox" id="ms-cb-SCHEDULED" value="SCHEDULED"><label for="ms-cb-SCHEDULED">SCHEDULED</label></div><div class="ms-item"><input type="checkbox" id="ms-cb-ยังไม่เปิดIDYL" value="ยังไม่เปิดIDYL"><label for="ms-cb-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</label></div></div>
         <div class="ms-clear" onclick="clearMsStatus()">ล้างตัวกรอง</div>
       </div>
     </div>
-    <select class="fsel" id="f-unit" onchange="applyFilters()"><option value="">หน่วยงานที่เกิดเหตุทั้งหมด</option></select>
-    <select class="fsel" id="f-repair" onchange="applyFilters()"><option value="">หน่วยงานซ่อมทั้งหมด</option></select>
+    <select class="fsel" id="f-unit" onchange="applyFilters()"><option value="">หน่วยงานที่เกิดเหตุทั้งหมด</option><option value="KPP">KPP</option><option value="คลังสินค้า">คลังสินค้า</option><option value="น้ำเชื่อมรีไฟน์">น้ำเชื่อมรีไฟน์</option><option value="บรรจุ">บรรจุ</option><option value="ลูกหีบ A">ลูกหีบ A</option><option value="ลูกหีบ B">ลูกหีบ B</option><option value="ลูกหีบ C">ลูกหีบ C</option><option value="หม้อต้ม C">หม้อต้ม C</option><option value="หม้อต้มดิบ AB">หม้อต้มดิบ AB</option><option value="หม้อปั่นดิบ AB">หม้อปั่นดิบ AB</option><option value="หม้อปั่นดิบ C">หม้อปั่นดิบ C</option><option value="หม้อเคี่ยวดิบ AB">หม้อเคี่ยวดิบ AB</option><option value="หม้อเคี่ยวดิบ C">หม้อเคี่ยวดิบ C</option><option value="เครื่องมือควบคุม">เครื่องมือควบคุม</option><option value="เคี่ยวปั่นรีไฟน์">เคี่ยวปั่นรีไฟน์</option><option value="ไซโล">ไซโล</option></select>
+    <select class="fsel" id="f-repair" onchange="applyFilters()"><option value="">หน่วยงานซ่อมทั้งหมด</option><option value="KPP">KPP</option><option value="ซ่อมบำรุงเครื่องกล">ซ่อมบำรุงเครื่องกล</option><option value="ซ่อมบำรุงไฟฟ้า">ซ่อมบำรุงไฟฟ้า</option><option value="บรรจุ">บรรจุ</option><option value="ลูกหีบ A">ลูกหีบ A</option><option value="ลูกหีบ B">ลูกหีบ B</option><option value="ลูกหีบ C">ลูกหีบ C</option><option value="หม้อปั่นดิบ AB">หม้อปั่นดิบ AB</option><option value="หม้อปั่นดิบ C">หม้อปั่นดิบ C</option><option value="เครื่องมือควบคุม">เครื่องมือควบคุม</option><option value="เคี่ยวปั่นรีไฟน์">เคี่ยวปั่นรีไฟน์</option><option value="ไซโล">ไซโล</option></select>
     <select class="fsel" id="fi-rank" onchange="applyFilters()"><option value="">Rank ทั้งหมด</option><option>A</option><option>B</option><option>C</option></select>
-    <button class="btn-reset-all owner-only" id="btn-reset-all" style="display:none" onclick="resetAllFilters()" title="ล้างตัวกรองทั้งหมด">
+    <button class="btn-reset-all owner-only" id="btn-reset-all" style="display: inline-flex;" onclick="resetAllFilters()" title="ล้างตัวกรองทั้งหมด">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-3.5"></path></svg>
       ล้างตัวกรอง
     </button>
   </div>
-  <div class="kpi-grid" id="kpi-grid"></div>
+  <div class="kpi-grid" id="kpi-grid"><div class="kpi-card total"><div class="kpi-label">ทั้งหมด</div><div class="kpi-value">98</div><div class="kpi-sub">100%</div></div><div class="kpi-card finished"><div class="kpi-label">FINISHED</div><div class="kpi-value">11</div><div class="kpi-sub">11%</div></div><div class="kpi-card history"><div class="kpi-label">HISTORY</div><div class="kpi-value">72</div><div class="kpi-sub">73%</div></div><div class="kpi-card scheduled"><div class="kpi-label">SCHEDULED</div><div class="kpi-value">2</div><div class="kpi-sub">2%</div></div><div class="kpi-card request"><div class="kpi-label">REQUEST</div><div class="kpi-value">5</div><div class="kpi-sub">5%</div></div><div class="kpi-card acknowledged"><div class="kpi-label">ACKNOWLEDGED</div><div class="kpi-value">1</div><div class="kpi-sub">1%</div></div><div class="kpi-card pending"><div class="kpi-label">ยังไม่เปิด IDYL</div><div class="kpi-value">7</div><div class="kpi-sub">7%</div></div></div>
   <div class="cgrid">
-    <div class="cc"><div class="ct">Status Work IDYL</div><div class="cs">สัดส่วนตามสถานะ</div><div class="cw"><canvas id="statusChart"></canvas></div></div>
-    <div class="cc"><div class="ct">Rank Distribution</div><div class="cs">ระดับความสำคัญ</div><div class="cw"><canvas id="rankChart"></canvas></div></div>
-    <div class="cc"><div class="ct">หน่วยงานที่เกิดเหตุการณ์</div><div class="cs">จำนวนเหตุการณ์ต่อหน่วยงาน</div><div class="cw"><canvas id="unitChart"></canvas></div></div>
-    <div class="cc"><div class="ct">หน่วยงานซ่อม</div><div class="cs">จำนวนงานซ่อมที่รับผิดชอบ</div><div class="cw"><canvas id="repairChart"></canvas></div></div>
+    <div class="cc"><div class="ct">Status Work IDYL</div><div class="cs">สัดส่วนตามสถานะ</div><div class="cw"><canvas id="statusChart" style="box-sizing: border-box; display: block; height: 290px; width: 777px;" width="777" height="290"></canvas></div></div>
+    <div class="cc"><div class="ct">Rank Distribution</div><div class="cs">ระดับความสำคัญ</div><div class="cw"><canvas id="rankChart" style="box-sizing: border-box; display: block; height: 290px; width: 777px;" width="777" height="290"></canvas></div></div>
+    <div class="cc"><div class="ct">หน่วยงานที่เกิดเหตุการณ์</div><div class="cs">จำนวนเหตุการณ์ต่อหน่วยงาน</div><div class="cw"><canvas id="unitChart" style="box-sizing: border-box; display: block; height: 290px; width: 777px;" width="777" height="290"></canvas></div></div>
+    <div class="cc"><div class="ct">หน่วยงานซ่อม</div><div class="cs">จำนวนงานซ่อมที่รับผิดชอบ</div><div class="cw"><canvas id="repairChart" style="box-sizing: border-box; display: block; height: 290px; width: 777px;" width="777" height="290"></canvas></div></div>
   </div>
   <div class="tcard">
     <div class="thead">
-      <div><div class="ttl">รายละเอียดเหตุการณ์</div><div style="font-size:.7rem;color:var(--g400);margin-top:2px" id="tcount"></div></div>
+      <div><div class="ttl">รายละเอียดเหตุการณ์</div><div style="font-size:.7rem;color:var(--g400);margin-top:2px" id="tcount">แสดง 98 จาก 98 รายการ</div></div>
       <div style="display:flex;align-items:center;gap:9px">
         <input class="tsearch" type="text" placeholder="🔍 ค้นหา..." id="search-box" oninput="applyFilters()">
-        <button class="btn-add owner-only" id="btn-add-row" style="display:none">
+        <button class="btn-add owner-only" id="btn-add-row" style="display: inline-flex;">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           เพิ่มรายการ
         </button>
       </div>
     </div>
-    <div class="twrap"><table><thead><tr><th>#</th><th>Work IDYL</th><th>หน่วยงานที่เกิดเหตุ</th><th>หน่วยงานซ่อม</th><th>ชื่อเหตุการณ์</th><th>วันเริ่ม</th><th>วันสิ้นสุด</th><th>เวลาหยุด</th><th>Rank</th><th>Status</th><th class="owner-col" id="th-action" style="display:none"></th></tr></thead><tbody id="tbody"></tbody></table></div>
+    <div class="twrap"><table><thead><tr><th>#</th><th>Work IDYL</th><th>หน่วยงานที่เกิดเหตุ</th><th>หน่วยงานซ่อม</th><th>ชื่อเหตุการณ์</th><th>วันเริ่ม</th><th>วันสิ้นสุด</th><th>เวลาหยุด</th><th>Rank</th><th>Status</th><th class="owner-col" id="th-action" style=""></th></tr></thead><tbody id="tbody"><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">1</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006418</td>
+    <td>ลูกหีบ C</td><td>ลูกหีบ C</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบแก้ไขวาล์วเดรนท่อน้ำอ้อยหลุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 17:26</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 17:50</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">24 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(0)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(0)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">2</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006419</td>
+    <td>ลูกหีบ C</td><td>ลูกหีบ C</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบแก้ไขสะพานฟีดเดอร์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 22:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 23:15</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">35 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(1)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(1)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">3</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006387</td>
+    <td>ลูกหีบ C</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">มอเตอร์ MC-134 สตาร์ทไม่ได้</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 23:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 23:50</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">35 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(2)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(2)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">4</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000022</td>
+    <td>KPP</td><td>KPP</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบราง C KPP สั่งหยุด Steam ตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 03:38</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 04:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">22 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(3)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(3)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">5</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000023</td>
+    <td>KPP</td><td>KPP</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบราง C KPP หยุดแก้ไขเบล</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 18:05</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 18:45</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">40 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(4)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(4)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">6</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006388</td>
+    <td>ลูกหีบ C</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">Drive ควบคุมกระแสไม่ได้</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 18:45</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 19:15</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">30 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(5)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(5)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">7</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000024</td>
+    <td>KPP</td><td>KPP</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบราง C KPP สั่งหยุดหีบ</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 22:18</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 22:45</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">27 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(6)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(6)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">8</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006420</td>
+    <td>ลูกหีบ C</td><td>ลูกหีบ C</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบ PM ตรวจเช็คชุดขับสะพานไซด์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-09 17:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-09 18:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">30 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(7)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(7)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">9</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000028</td>
+    <td>KPP</td><td>KPP</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบราง C  KPP สั่งหยุดหีบ</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 00:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 00:50</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">10 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(8)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(8)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">10</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000027</td>
+    <td>KPP</td><td>KPP</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบราง A สายพานกากอ้อย KPP ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 16:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 17:28</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">53 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(9)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(9)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">11</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000026</td>
+    <td>KPP</td><td>KPP</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบราง C สายพานกากอ้อย KPP ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 16:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 18:20</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม. 45 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(10)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(10)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">12</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006389</td>
+    <td>ลูกหีบ C</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">สะพานกระตุก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-11 17:10</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-11 18:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">50 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(11)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(11)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">13</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006416</td>
+    <td>ลูกหีบ A</td><td>ลูกหีบ A</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบขันน๊อตโฮเพ่นเกียร</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-15 04:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-15 05:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">25 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(12)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(12)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">14</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000410</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:220px;line-height:1.4">แก้ไขน๊อตมอเตอร์ตะแกรงเม็ดหลวม</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 01:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 03:10</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม. 40 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(13)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(13)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">15</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006417</td>
+    <td>ลูกหีบ A</td><td>ลูกหีบ A</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบแก้ไขเร่งหวีบนลูกหีบชุดที่ 1</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 01:41</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 02:35</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">54 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(14)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(14)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">16</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000025</td>
+    <td>KPP</td><td>KPP</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบราง C KPP  สั่งหยุดกากอ้อยตันชูต</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 13:58</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 15:10</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม. 12 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(15)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(15)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">17</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006383</td>
+    <td>หม้อปั่นดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">แก้ไขชุดโซ่ขับและฟันเฟืองตกร่อง กระพ้อ A ละลาย</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-18 15:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-19 04:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>12</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(16)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(16)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">18</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006384</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">เปลี่ยนขาคันชักตะแกรงโยก เกรด 3 ตัวที่ 2</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-19 04:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-19 04:45</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(17)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(17)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">19</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006415</td>
+    <td>ลูกหีบ B</td><td>ลูกหีบ B</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบสะพานข้ามชุดที่ 4 ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-21 03:50</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-21 04:10</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">20 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(18)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(18)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">20</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000129</td>
+    <td>หม้อปั่นดิบ C</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">Drive หม้อปั่นน้ำตาล SU A4 Drive ชำรุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-22 10:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-23 00:24</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>13</b> ชม. 44 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(19)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(19)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">21</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000175</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:220px;line-height:1.4">หม้ออบตะแกรงโยกเกรด 3 ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-23 20:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 21:45</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>25</b> ชม. 15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(20)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(20)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">22</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000088</td>
+    <td>น้ำเชื่อมรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ปั๊มน้ำเชื่อมขุ่น FP.3 ลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 02:20</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-27 00:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>69</b> ชม. 40 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(21)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(21)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">23</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000411</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:220px;line-height:1.4">ตะแกรงคัดเม็ดทรายขาวขาด No.2</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 08:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 12:10</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>3</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(22)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(22)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">24</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006513</td>
+    <td>หม้อปั่นดิบ C</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">หม้อปั่น C10 ฝาเทอมินอลบล็อกหลุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 11:55</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 12:10</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(23)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(23)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">25</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000412</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">หม้ออบตะแกรงโยก W3 No.2 ขาคันชักหัก 2 ข้าง</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-25 16:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 03:20</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>10</b> ชม. 40 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-REQUEST">REQUEST</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(24)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(24)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">26</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006531</td>
+    <td>ลูกหีบ B</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบมอเตอร์ขับสะพานอีเลเวเตอร์ ไหม้</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 05:20</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 09:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>3</b> ชม. 40 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(25)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(25)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">27</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000421</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:220px;line-height:1.4">หม้อปั่น SR-R เปลี่ยนแอร์ไกด์ ตัวยึดขาเซนเซอร์หลุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 06:10</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 07:10</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(26)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(26)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">28</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006798</td>
+    <td>ลูกหีบ A</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบลูกป้อนชุด 3 ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 06:50</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 06:59</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">9 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(27)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(27)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">29</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO25-006532</td>
+    <td>หม้อต้มดิบ AB</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">ปั๊มน้ำอ้อยตัวที่ 3 สายไฟไหม้</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 06:50</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 11:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>4</b> ชม. 10 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(28)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(28)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">30</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000176</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:220px;line-height:1.4">หม้ออบตะแกรงโยก No. 2 ทริป เนื่องจากขาคันชักหัก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 15:20</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-27 11:40</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>20</b> ชม. 20 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(29)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(29)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">31</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000423</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:220px;line-height:1.4">ท่อน้ำ condenser หม้อเคี่ยว A1 รั่ว</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-27 18:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-01 05:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>106</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(30)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(30)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">32</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000413</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">รางกวนน้ำตาล R1 น๊อตฟันเฟืองติดมอเตอร์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-29 14:25</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-29 18:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>3</b> ชม. 35 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-REQUEST">REQUEST</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(31)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(31)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">33</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000090</td>
+    <td>หม้อเคี่ยวดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">แก้ไขปั๊มน้ำตาล C</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-31 02:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-31 05:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>2</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(32)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(32)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">34</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000177</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">กระพ้อเปียกน้ำตาล W ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-31 10:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-31 12:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม. 20 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(33)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(33)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">35</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000420</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เครื่องมือควบคุม</td>
+    <td style="max-width:220px;line-height:1.4">วาล์วโมลาส W ไม่ทำงาน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-01 10:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-01 10:55</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">40 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(34)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(34)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">36</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000417</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">มอเตอร์ตะแกรงคัดเม็ด No.1 ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-03 12:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-03 12:35</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">35 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(35)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(35)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">37</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000416</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">หม้อปั่น R8 น้าจอไม่ติด ฟิวส์ขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-03 12:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-03 13:20</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม. 5 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(36)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(36)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">38</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000081</td>
+    <td>หม้อปั่นดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ปั๊มแม๊กม่า C มีเหล็กเข้า</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-04 09:50</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-04 11:40</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม. 50 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(37)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(37)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">39</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000083</td>
+    <td>ลูกหีบ B</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบมอเตอร์สะพานเมน ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-06 06:45</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-06 08:20</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม. 35 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(38)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(38)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">40</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000091</td>
+    <td>หม้อปั่นดิบ C</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">กระพ้อชุดที่ 1 ทริป ลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-06 23:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-07 04:15</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>4</b> ชม. 45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(39)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(39)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">41</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000119</td>
+    <td>ลูกหีบ A</td><td>ลูกหีบ A</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบแก้ไขเร่งหวีบนลูกหีบชุดที่ 1</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-07 22:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-08 03:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>5</b> ชม.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(40)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(40)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">42</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000172</td>
+    <td>หม้อปั่นดิบ AB</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">มอเตอร์ฟีดน้ำตาลหม้ออบโรตารี่ไหม้</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-09 00:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-09 08:20</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>7</b> ชม. 45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(41)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(41)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">43</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000415</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:220px;line-height:1.4">หม้อปั่น R6 น้ำตาลไม่ได้ วาล์วบนเปิดไม่ออก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-10 00:45</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-10 05:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>4</b> ชม. 15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(42)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(42)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">44</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000414</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ถังโมลาส SR ใบกวนลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-10 22:50</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-11 08:10</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>9</b> ชม. 20 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(43)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(43)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">45</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000240</td>
+    <td>หม้อปั่นดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">เปลี่ยนมอเตอร์เกียร์สายพาน CP-041</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-12 21:10</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-13 02:25</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>5</b> ชม. 15 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(44)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(44)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">46</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-001803</td>
+    <td>ลูกหีบ A</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ปั๊มน้ำอ้อยส่งหม้อต้มตัวที่ 1 ลิ่มใบปั๊มหลุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-16 09:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-16 13:15</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>3</b> ชม. 45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(45)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(45)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">47</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002851</td>
+    <td>น้ำเชื่อมรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ท่อน้ำร้อนละลายน้ำเกลือรั่ว</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 18:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 20:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>2</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-ACKNOWLEDGED">ACKNOWLEDGED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(46)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(46)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">48</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000084</td>
+    <td>KPP</td><td>KPP</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบราง C  KPP กากอ้อยตัน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-22 04:05</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-22 04:10</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">5 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(47)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(47)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">49</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000341</td>
+    <td>เครื่องมือควบคุม</td><td>เครื่องมือควบคุม</td>
+    <td style="max-width:220px;line-height:1.4">ระบบ DCS ล่ม</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-23 18:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-23 18:15</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(48)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(48)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">50</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002821</td>
+    <td>บรรจุ</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">เครื่องพ่นน้ำตาล Fufiler มีเสียงดังผิดปกติ</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-19 17:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-20 07:30</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>14</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(49)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(49)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">51</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000979</td>
+    <td>ลูกหีบ C</td><td>ลูกหีบ C</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบอ้อยพันลูกคราดสะพานอีเลเวเตอร์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-27 14:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-27 18:05</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>3</b> ชม. 35 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(50)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(50)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">52</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000424</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">พัดลมดูดห้องตะแกรงคัดเม็ด w มีเสียงดัง</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 04:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 13:45</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>9</b> ชม. 15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(51)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(51)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">53</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002822</td>
+    <td>บรรจุ</td><td>บรรจุ</td>
+    <td style="max-width:220px;line-height:1.4">Air Chiller trip</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 04:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 05:10</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(52)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(52)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">54</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000429</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">ไฟไลน์หม้อปั่นดับ หม้อ R9 เกิด Flash cover</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 17:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 22:02</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>4</b> ชม. 32 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(53)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(53)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">55</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000428</td>
+    <td>หม้อปั่นดิบ AB</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">ไฟหม้อปั่นดับ</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 17:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 18:05</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">35 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(54)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(54)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">56</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000398</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ลูกปืนลูกกลิ้งขับสายพานท้ายหม้ออบ W3 แตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 23:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-30 01:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>2</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(55)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(55)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">57</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000427</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">หม้อปั่่น R9 พัดลมเป่าเสียงดัง</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-30 04:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-30 04:20</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">20 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(56)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(56)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">58</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002659</td>
+    <td>บรรจุ</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">สายพานห้องบรรจุทรายขาวไม่งาน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 16:05</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 17:15</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม. 10 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(57)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(57)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">59</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">W026-000408</td>
+    <td>หม้อปั่นดิบ C</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">หยุดปั่น A ลูกกระพ้อต้นที่ 2 ขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-31 09:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-31 10:05</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">35 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(58)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(58)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">60</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-001804</td>
+    <td>ลูกหีบ A</td><td>ลูกหีบ A</td>
+    <td style="max-width:220px;line-height:1.4">หยุดตรวจเช็คและแก้ไขสะพานอีเลเวเตอร์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-01 05:23</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-01 06:50</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม. 27 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(59)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(59)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">61</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-001523</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เครื่องมือควบคุม</td>
+    <td style="max-width:220px;line-height:1.4">แก้ไขหัววัด Brix หม้อ R6 เพี้ยน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-02 17:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-02 19:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>2</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(60)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(60)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">62</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-000438</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ตะแกรงโยกหม้ออบเกรด 3 ตัวที่ 2 แตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-04 22:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-05 02:05</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>4</b> ชม. 5 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(61)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(61)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">63</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-001601</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">แก้ไขใบกวนถังโมลาส</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-12 08:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-12 11:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>2</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(62)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(62)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">64</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002658</td>
+    <td>ลูกหีบ A</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบมอเตอร์ลูกหีบชุดที่ 1 ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-16 11:55</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-16 12:10</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">15 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(63)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(63)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">65</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002820</td>
+    <td>ลูกหีบ A</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ปั๊มน้ำอ้อยส่งหม้อต้มตัวที่1 มีเสียงดัง</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-23 20:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 03:40</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>7</b> ชม. 10 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(64)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(64)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">66</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-001171</td>
+    <td>ลูกหีบ B</td><td>ลูกหีบ B</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบแก้ไขซองเชรดเดอร์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-27 08:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-27 08:45</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">30 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(65)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(65)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">67</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-001602</td>
+    <td>หม้อเคี่ยวดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ปีมน้ำตาล C ขึ้นถังรางกวนตั้งเพลาขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-16 14:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 08:40</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>18</b> ชม. 40 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(66)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(66)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">68</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-001606</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:220px;line-height:1.4">เปลี่ยนตะแกรงหม้อปั่น R1</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-16 15:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 06:30</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>15</b> ชม. 30 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(67)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(67)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">69</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td>ลูกหีบ B</td><td>ลูกหีบ B</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหีบสะพานข้ามชุดที่ 1ทริปอ้อยอัดท้ายสะพาน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-14 11:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-14 14:50</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>3</b> ชม. 50 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(68)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(68)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">70</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-0002771</td>
+    <td>หม้อเคี่ยวดิบ C</td><td>เครื่องมือควบคุม</td>
+    <td style="max-width:220px;line-height:1.4">ระบบ DCS หม้อเคี่ยวการ์ด Module ET200 ชำรุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-21 04:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-21 04:40</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">5 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(69)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(69)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">71</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002772</td>
+    <td>หม้อเคี่ยวดิบ C</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ปั๊มโมลาส เชื้อ A ตัวที่ 1 มีเหล็กเข้า</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-23 20:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 03:40</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>7</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(70)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(70)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">72</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002596</td>
+    <td>หม้อต้ม C</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ลิ่มคัปปลิ้งเพลารางผสมน้ำโคลนรูด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-13 04:20</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-13 12:30</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>8</b> ชม. 10 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(71)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(71)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">73</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002600</td>
+    <td>หม้อต้ม C</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ปั๊มน้ำอ้อยใสตัวที่ 1 ลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-18 03:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-18 04:40</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(72)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(72)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">74</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002433</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:220px;line-height:1.4">หยุดปั่นน้ำตาลไลน์เกรด 3 เซนเซอร์หม้อ R11ไม่ทำงาน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-21 15:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-21 17:35</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>2</b> ชม. 35 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(73)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(73)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">75</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002602</td>
+    <td>หม้อต้มดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ลูกปืนหม้อกรองตัวที่ 3 แตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-30 09:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-30 11:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>2</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(74)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(74)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">76</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002521</td>
+    <td>หม้อปั่นดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">หม้ออบโรตารี่ เพลาลูกกลิ้งสายพานเส้นที่ 2 ขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 06:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 17:40</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>11</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(75)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(75)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">77</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002608</td>
+    <td>หม้อต้มดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">แก้ไขปั๊มน้ำร้อน Heater ปอกเพลาหลวม</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-14 04:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-14 09:55</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>5</b> ชม. 15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(76)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(76)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">78</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002558</td>
+    <td>หม้อปั่นดิบ AB</td><td>หม้อปั่นดิบ AB</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหม้อปั่น A No.1 ระบบโปรแกรมตู้คอนโทรลมีปัญหา</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-23 04:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-SCHEDULED">SCHEDULED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(77)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(77)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">79</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002648</td>
+    <td>คลังสินค้า</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ชุดขับโรยน้ำตาลลูกกลิ้งสายพานแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-25 10:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-26 04:30</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>17</b> ชม. 55 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(78)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(78)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">80</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002498</td>
+    <td>หม้อปั่นดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">เพลาลูกกลิ้งสายพานเส้นที่ 2 ขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 06:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 17:50</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>11</b> ชม. 10 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(79)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(79)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">81</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002660</td>
+    <td>หม้อปั่นดิบ C</td><td>เครื่องมือควบคุม</td>
+    <td style="max-width:220px;line-height:1.4">กระบอกลมปิด-เปิดเครืองชั่งน้ำตาลดิบเสีย</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 16:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 16:50</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">20 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(80)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(80)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">82</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002865</td>
+    <td>น้ำเชื่อมรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">หยุดปั๊มปูนขาวตัวที่ 4 มีเหล็กติดใบปั๊ม</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 15:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 18:20</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>2</b> ชม. 50 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-REQUEST">REQUEST</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(81)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(81)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">83</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002808</td>
+    <td>หม้อต้มดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ปั๊มน้ำอ้อย AB ลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-26 06:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-27 02:20</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>19</b> ชม. 40 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(82)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(82)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">84</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002852</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ลูกกลิ้งขับสายพานท้ายตะแกรงโยกเกรด 3 ไม่หมุน ลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-26 19:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-27 00:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>4</b> ชม. 45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(83)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(83)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">85</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002850</td>
+    <td>หม้อปั่นดิบ C</td><td>หม้อปั่นดิบ C</td>
+    <td style="max-width:220px;line-height:1.4">หม้อปั่น C ตะแกรงขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-01 17:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-01 19:00</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>2</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-SCHEDULED">SCHEDULED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(84)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(84)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">86</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002853</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">หยุดปั่นหม้อ R7 กระพ้อมีเสียงดังโซ่กระพ้อเบียดข้าง</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-03 09:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-REQUEST">REQUEST</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(85)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(85)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">87</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td>หม้อเคี่ยวดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ปั๊มน้ำตาล c-mass ฝาปั๊มแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-04 04:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(86)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(86)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">88</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002929</td>
+    <td>ลูกหีบ A</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">มอเตอร์พัดลม cooling ลูกหีบช๊อตลงกราวน์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-04 11:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-04 14:09</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>3</b> ชม. 9 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(87)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(87)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">89</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td>หม้อปั่นดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ปั๊มเฟืองโมลาส เข้าเพลทเพลาขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-05 07:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(88)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(88)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">90</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td>ลูกหีบ B</td><td>ลูกหีบ B</td>
+    <td style="max-width:220px;line-height:1.4">วงเดือนรถอ้อยดัมพ์ 9 ขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-07 18:20</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-07 19:15</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">55 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(89)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(89)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">91</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002931</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>ซ่อมบำรุงไฟฟ้า</td>
+    <td style="max-width:220px;line-height:1.4">มอเตอร์ตะแกรงโยกคัดเม็ด Trip</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-09 08:59</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-09 10:44</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม. 45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(90)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(90)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">92</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002955</td>
+    <td>หม้อปั่นดิบ C</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">แก้ไขกระพ้อราง C ตัวที่ 2</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-09 13:08</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-09 13:58</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap">50 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(91)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(91)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">93</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002969</td>
+    <td>ลูกหีบ B</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ปั๊มน้ำอ้อยขึ้นหม้อกรองตัวที่ 2 ปั๊มไม่ขึ้น</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-13 19:59</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-14 01:59</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>6</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-REQUEST">REQUEST</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(92)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(92)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">94</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td>ไซโล</td><td>ไซโล</td>
+    <td style="max-width:220px;line-height:1.4">ตะแกรงคัดเม็ดน้ำตาล Out feed น้ำตาลล้นท่อ reject</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">—</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(93)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(93)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">95</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-002980</td>
+    <td>หม้อปั่นดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">หยุดหม้อปั่น CB A1-A5 ลูกกลิ้งขับสายพานฟรีและ over load trip</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-15 19:09</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-15 20:09</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>1</b> ชม.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(94)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(94)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">96</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td>หม้อต้มดิบ AB</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ลิ้นเช็ควาล์วน้ำอ้อยรวมหลุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">—</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(95)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(95)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">97</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap">WO26-003021</td>
+    <td>เคี่ยวปั่นรีไฟน์</td><td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:220px;line-height:1.4">น้ำรั่วลงสายพานห้องบรรจุ 1 ตัน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-18 04:59</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-18 08:54</td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><b>3</b> ชม. 55 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(96)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(96)">🗑</button>
+  </td>
+  </tr><tr>
+    <td style="font-family:monospace;color:#94a3b8;font-size:.73rem">98</td>
+    <td style="font-family:monospace;font-size:.73rem;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td>ลูกหีบ A</td><td>ซ่อมบำรุงเครื่องกล</td>
+    <td style="max-width:220px;line-height:1.4">ลูกปืนคอเพลาปั๊มน้ำพรมชุดที่ 2 แตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">—</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+    <td style="white-space:nowrap">
+    <button class="btn-edit" title="แก้ไข" onclick="openEdit(97)">✏️</button>
+    <button class="btn-del" title="ลบ" onclick="openDelConfirm(97)">🗑</button>
+  </td>
+  </tr></tbody></table></div>
   </div>
 </div>
 
@@ -362,7 +1734,7 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
           <button type="button" onclick="openUnitMgr('unit')" style="font-size:.67rem;color:var(--b6);background:none;border:none;cursor:pointer;padding:0;font-family:'Sarabun',sans-serif;font-weight:600">⚙ จัดการรายการ</button>
         </div>
         <input class="finput" id="fi-unit" list="dl-unit" placeholder="เช่น ลูกหีบ C" autocomplete="off">
-        <datalist id="dl-unit"></datalist>
+        <datalist id="dl-unit"><option value="คลังสินค้า"></option><option value="เครื่องมือควบคุม"></option><option value="เคี่ยวปั่นรีไฟน์"></option><option value="ซ่อมบำรุงเครื่องกล"></option><option value="ซ่อมบำรุงไฟฟ้า"></option><option value="ไซโล"></option><option value="น้ำเชื่อมรีไฟน์"></option><option value="บรรจุ"></option><option value="ลูกหีบ A"></option><option value="ลูกหีบ B"></option><option value="ลูกหีบ C"></option><option value="หม้อเคี่ยวดิบ AB"></option><option value="หม้อเคี่ยวดิบ C"></option><option value="หม้อต้มดิบ AB"></option><option value="หม้อต้มดิบ C"></option><option value="หม้อต้ม C"></option><option value="หม้อปั่นดิบ AB"></option><option value="หม้อปั่นดิบ C"></option><option value="อาชีวอนามัยฯ"></option><option value="KPP"></option></datalist>
       </div>
       <div>
         <div class="flabel" style="display:flex;align-items:center;justify-content:space-between">
@@ -370,7 +1742,7 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
           <button type="button" onclick="openUnitMgr('rep')" style="font-size:.67rem;color:var(--b6);background:none;border:none;cursor:pointer;padding:0;font-family:'Sarabun',sans-serif;font-weight:600">⚙ จัดการรายการ</button>
         </div>
         <input class="finput" id="fi-rep" list="dl-rep" placeholder="เช่น ซ่อมบำรุงไฟฟ้า" autocomplete="off">
-        <datalist id="dl-rep"></datalist>
+        <datalist id="dl-rep"><option value="คลังสินค้า"></option><option value="เครื่องมือควบคุม"></option><option value="เคี่ยวปั่นรีไฟน์"></option><option value="ซ่อมบำรุงเครื่องกล"></option><option value="ซ่อมบำรุงไฟฟ้า"></option><option value="ไซโล"></option><option value="น้ำเชื่อมรีไฟน์"></option><option value="บรรจุ"></option><option value="ลูกหีบ A"></option><option value="ลูกหีบ B"></option><option value="ลูกหีบ C"></option><option value="หม้อเคี่ยวดิบ AB"></option><option value="หม้อเคี่ยวดิบ C"></option><option value="หม้อต้มดิบ AB"></option><option value="หม้อต้มดิบ C"></option><option value="หม้อปั่นดิบ AB"></option><option value="หม้อปั่นดิบ C"></option><option value="อาชีวอนามัยฯ"></option><option value="KPP"></option></datalist>
       </div>
     </div>
     <div class="frow full">
@@ -432,15 +1804,54 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
   <div class="cc full">
     <div class="ct">หน่วยงานที่เกิดเหตุการณ์ × หน่วยงานซ่อม — แยกตาม Status Work IDYL</div>
     <div class="cs">แต่ละแท่งแสดงคู่ (หน่วยงานที่เกิดเหตุ / หน่วยงานซ่อม) สีแสดงสถานะงาน IDYL</div>
-    <div class="cw-tall"><canvas id="crossChart"></canvas></div>
+    <div class="cw-tall"><canvas id="crossChart" style="box-sizing: border-box; display: block; height: 0px; width: 0px;" width="0" height="0"></canvas></div>
   </div>
 </div>
 
 <!-- PAGE: DOWNTIME -->
 <div class="page" id="page-downtime">
   <div style="font-size:.78rem;font-weight:700;color:var(--b9);text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px;margin-top:4px;display:flex;align-items:center;gap:8px">สรุปเวลาหยุดแยกตาม Rank <span style="flex:1;height:1px;background:var(--b1);display:block"></span></div>
-  <div class="sgrid" id="rank-stat-grid"></div>
-  <div class="cc" style="margin-bottom:16px"><div class="ct">เปรียบเทียบเวลาหยุดรวม ตาม Rank</div><div class="cs">สัดส่วนเวลาหยุดของแต่ละระดับความสำคัญ</div><div class="cw"><canvas id="dtBar"></canvas></div></div>
+  <div class="sgrid" id="rank-stat-grid"><div class="sbox">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px">
+        <div><div style="font-size:.69rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px">Rank A — สูง</div><div style="font-family:'IBM Plex Mono',monospace;font-size:1.7rem;font-weight:700;color:#dc2626">28</div><div style="font-size:.69rem;color:#94a3b8">เหตุการณ์</div></div>
+        <span class="rbadge A" style="font-size:.95rem;padding:5px 13px">A</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+        <div><div style="font-size:.68rem;color:#94a3b8">รวมนาที</div><div style="font-weight:700;font-size:1rem;color:#1e293b">1,898</div></div>
+        <div><div style="font-size:.68rem;color:#94a3b8">รวมชั่วโมง</div><div style="font-weight:700;font-size:1rem;color:#1e293b">31.6</div></div>
+        <div><div style="font-size:.68rem;color:#94a3b8">เฉลี่ย/ครั้ง</div><div style="font-weight:600;color:#1e293b">68 นาที</div></div>
+        <div><div style="font-size:.68rem;color:#94a3b8">ยังไม่สิ้นสุด</div><div style="font-weight:600;color:#ef4444">0 รายการ</div></div>
+      </div>
+      <div style="font-size:.69rem;color:#94a3b8;margin-bottom:3px">สัดส่วนจากเวลาหยุดทั้งหมด 6%</div>
+      <div class="pbar-wrap"><div class="pbar" style="width:8%;background:#dc2626"></div></div>
+    </div><div class="sbox">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px">
+        <div><div style="font-size:.69rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px">Rank B — กลาง</div><div style="font-family:'IBM Plex Mono',monospace;font-size:1.7rem;font-weight:700;color:#d97706">10</div><div style="font-size:.69rem;color:#94a3b8">เหตุการณ์</div></div>
+        <span class="rbadge B" style="font-size:.95rem;padding:5px 13px">B</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+        <div><div style="font-size:.68rem;color:#94a3b8">รวมนาที</div><div style="font-weight:700;font-size:1rem;color:#1e293b">6,117</div></div>
+        <div><div style="font-size:.68rem;color:#94a3b8">รวมชั่วโมง</div><div style="font-weight:700;font-size:1rem;color:#1e293b">102.0</div></div>
+        <div><div style="font-size:.68rem;color:#94a3b8">เฉลี่ย/ครั้ง</div><div style="font-weight:600;color:#1e293b">680 นาที</div></div>
+        <div><div style="font-size:.68rem;color:#94a3b8">ยังไม่สิ้นสุด</div><div style="font-weight:600;color:#ef4444">1 รายการ</div></div>
+      </div>
+      <div style="font-size:.69rem;color:#94a3b8;margin-bottom:3px">สัดส่วนจากเวลาหยุดทั้งหมด 19%</div>
+      <div class="pbar-wrap"><div class="pbar" style="width:25%;background:#d97706"></div></div>
+    </div><div class="sbox">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px">
+        <div><div style="font-size:.69rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px">Rank C — ต่ำ</div><div style="font-family:'IBM Plex Mono',monospace;font-size:1.7rem;font-weight:700;color:#16a34a">60</div><div style="font-size:.69rem;color:#94a3b8">เหตุการณ์</div></div>
+        <span class="rbadge C" style="font-size:.95rem;padding:5px 13px">C</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+        <div><div style="font-size:.68rem;color:#94a3b8">รวมนาที</div><div style="font-weight:700;font-size:1rem;color:#1e293b">24,758</div></div>
+        <div><div style="font-size:.68rem;color:#94a3b8">รวมชั่วโมง</div><div style="font-weight:700;font-size:1rem;color:#1e293b">412.6</div></div>
+        <div><div style="font-size:.68rem;color:#94a3b8">เฉลี่ย/ครั้ง</div><div style="font-weight:600;color:#1e293b">458 นาที</div></div>
+        <div><div style="font-size:.68rem;color:#94a3b8">ยังไม่สิ้นสุด</div><div style="font-weight:600;color:#ef4444">6 รายการ</div></div>
+      </div>
+      <div style="font-size:.69rem;color:#94a3b8;margin-bottom:3px">สัดส่วนจากเวลาหยุดทั้งหมด 76%</div>
+      <div class="pbar-wrap"><div class="pbar" style="width:100%;background:#16a34a"></div></div>
+    </div></div>
+  <div class="cc" style="margin-bottom:16px"><div class="ct">เปรียบเทียบเวลาหยุดรวม ตาม Rank</div><div class="cs">สัดส่วนเวลาหยุดของแต่ละระดับความสำคัญ</div><div class="cw"><canvas id="dtBar" style="box-sizing: border-box; display: block; height: 0px; width: 0px;" width="0" height="0"></canvas></div></div>
   <div class="cc" style="margin-bottom:16px">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
       <div>
@@ -454,18 +1865,900 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
         <option value="C">Rank C</option>
       </select>
     </div>
-    <div class="cw" style="overflow-y:auto;max-height:480px"><canvas id="evtBar"></canvas></div>
+    <div class="cw" style="overflow-y:auto;max-height:480px"><canvas id="evtBar" style="height: 0px; box-sizing: border-box; display: block; width: 0px;" width="0" height="0"></canvas></div>
   </div>
   <div class="tcard">
     <div class="thead"><div class="ttl">รายละเอียดเหตุการณ์</div></div>
-    <div class="twrap"><table class="dt-table"><thead><tr><th>#</th><th>หน่วยงาน</th><th>ชื่อเหตุการณ์</th><th>วันเริ่ม</th><th>วันสิ้นสุด</th><th>เวลาหยุด</th><th>Rank</th><th>Status</th></tr></thead><tbody id="dtbody"></tbody></table></div>
+    <div class="twrap"><table class="dt-table"><thead><tr><th>#</th><th>หน่วยงาน</th><th>ชื่อเหตุการณ์</th><th>วันเริ่ม</th><th>วันสิ้นสุด</th><th>เวลาหยุด</th><th>Rank</th><th>Status</th></tr></thead><tbody id="dtbody"><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">1</td>
+    <td>ลูกหีบ C</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบแก้ไขวาล์วเดรนท่อน้ำอ้อยหลุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 17:26</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 17:50</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">24 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">2</td>
+    <td>ลูกหีบ C</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบแก้ไขสะพานฟีดเดอร์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 22:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 23:15</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">35 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">3</td>
+    <td>ลูกหีบ C</td>
+    <td style="max-width:260px;line-height:1.4">มอเตอร์ MC-134 สตาร์ทไม่ได้</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 23:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-07 23:50</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">35 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">4</td>
+    <td>KPP</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบราง C KPP สั่งหยุด Steam ตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 03:38</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 04:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">22 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">5</td>
+    <td>KPP</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบราง C KPP หยุดแก้ไขเบล</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 18:05</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 18:45</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">40 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">6</td>
+    <td>ลูกหีบ C</td>
+    <td style="max-width:260px;line-height:1.4">Drive ควบคุมกระแสไม่ได้</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 18:45</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 19:15</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">30 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">7</td>
+    <td>KPP</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบราง C KPP สั่งหยุดหีบ</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 22:18</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-08 22:45</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">27 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">8</td>
+    <td>ลูกหีบ C</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบ PM ตรวจเช็คชุดขับสะพานไซด์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-09 17:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-09 18:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">30 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">9</td>
+    <td>KPP</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบราง C  KPP สั่งหยุดหีบ</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 00:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 00:50</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">10 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">10</td>
+    <td>KPP</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบราง A สายพานกากอ้อย KPP ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 16:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 17:28</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">53 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">11</td>
+    <td>KPP</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบราง C สายพานกากอ้อย KPP ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 16:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-10 18:20</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม. 45 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">12</td>
+    <td>ลูกหีบ C</td>
+    <td style="max-width:260px;line-height:1.4">สะพานกระตุก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-11 17:10</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-11 18:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">50 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">13</td>
+    <td>ลูกหีบ A</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบขันน๊อตโฮเพ่นเกียร</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-15 04:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-15 05:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">25 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">14</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">แก้ไขน๊อตมอเตอร์ตะแกรงเม็ดหลวม</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 01:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 03:10</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม. 40 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">15</td>
+    <td>ลูกหีบ A</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบแก้ไขเร่งหวีบนลูกหีบชุดที่ 1</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 01:41</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 02:35</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">54 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">16</td>
+    <td>KPP</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบราง C KPP  สั่งหยุดกากอ้อยตันชูต</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 13:58</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-16 15:10</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม. 12 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">17</td>
+    <td>หม้อปั่นดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">แก้ไขชุดโซ่ขับและฟันเฟืองตกร่อง กระพ้อ A ละลาย</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-18 15:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-19 04:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>12</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">18</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">เปลี่ยนขาคันชักตะแกรงโยก เกรด 3 ตัวที่ 2</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-19 04:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-19 04:45</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">19</td>
+    <td>ลูกหีบ B</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบสะพานข้ามชุดที่ 4 ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-21 03:50</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-21 04:10</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">20 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">20</td>
+    <td>หม้อปั่นดิบ C</td>
+    <td style="max-width:260px;line-height:1.4">Drive หม้อปั่นน้ำตาล SU A4 Drive ชำรุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-22 10:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-23 00:24</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>13</b> ชม. 44 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">21</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">หม้ออบตะแกรงโยกเกรด 3 ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-23 20:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 21:45</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>25</b> ชม. 15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-B">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">22</td>
+    <td>น้ำเชื่อมรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">ปั๊มน้ำเชื่อมขุ่น FP.3 ลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 02:20</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-27 00:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>69</b> ชม. 40 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">23</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">ตะแกรงคัดเม็ดทรายขาวขาด No.2</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 08:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 12:10</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>3</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">24</td>
+    <td>หม้อปั่นดิบ C</td>
+    <td style="max-width:260px;line-height:1.4">หม้อปั่น C10 ฝาเทอมินอลบล็อกหลุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 11:55</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-24 12:10</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">25</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">หม้ออบตะแกรงโยก W3 No.2 ขาคันชักหัก 2 ข้าง</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-25 16:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 03:20</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>10</b> ชม. 40 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-REQUEST">REQUEST</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">26</td>
+    <td>ลูกหีบ B</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบมอเตอร์ขับสะพานอีเลเวเตอร์ ไหม้</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 05:20</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 09:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>3</b> ชม. 40 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">27</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">หม้อปั่น SR-R เปลี่ยนแอร์ไกด์ ตัวยึดขาเซนเซอร์หลุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 06:10</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 07:10</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">28</td>
+    <td>ลูกหีบ A</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบลูกป้อนชุด 3 ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 06:50</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 06:59</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">9 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">29</td>
+    <td>หม้อต้มดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">ปั๊มน้ำอ้อยตัวที่ 3 สายไฟไหม้</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 06:50</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 11:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>4</b> ชม. 10 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">30</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">หม้ออบตะแกรงโยก No. 2 ทริป เนื่องจากขาคันชักหัก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-26 15:20</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-27 11:40</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>20</b> ชม. 20 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">31</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">ท่อน้ำ condenser หม้อเคี่ยว A1 รั่ว</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-27 18:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-01 05:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>106</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">32</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">รางกวนน้ำตาล R1 น๊อตฟันเฟืองติดมอเตอร์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-29 14:25</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-29 18:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>3</b> ชม. 35 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-REQUEST">REQUEST</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">33</td>
+    <td>หม้อเคี่ยวดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">แก้ไขปั๊มน้ำตาล C</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-31 02:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-31 05:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>2</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">34</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">กระพ้อเปียกน้ำตาล W ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-31 10:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2025-12-31 12:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม. 20 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">35</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">วาล์วโมลาส W ไม่ทำงาน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-01 10:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-01 10:55</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">40 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">36</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">มอเตอร์ตะแกรงคัดเม็ด No.1 ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-03 12:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-03 12:35</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">35 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">37</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">หม้อปั่น R8 น้าจอไม่ติด ฟิวส์ขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-03 12:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-03 13:20</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม. 5 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">38</td>
+    <td>หม้อปั่นดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">ปั๊มแม๊กม่า C มีเหล็กเข้า</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-04 09:50</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-04 11:40</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม. 50 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">39</td>
+    <td>ลูกหีบ B</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบมอเตอร์สะพานเมน ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-06 06:45</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-06 08:20</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม. 35 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">40</td>
+    <td>หม้อปั่นดิบ C</td>
+    <td style="max-width:260px;line-height:1.4">กระพ้อชุดที่ 1 ทริป ลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-06 23:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-07 04:15</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>4</b> ชม. 45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">41</td>
+    <td>ลูกหีบ A</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบแก้ไขเร่งหวีบนลูกหีบชุดที่ 1</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-07 22:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-08 03:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>5</b> ชม.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">42</td>
+    <td>หม้อปั่นดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">มอเตอร์ฟีดน้ำตาลหม้ออบโรตารี่ไหม้</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-09 00:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-09 08:20</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>7</b> ชม. 45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">43</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">หม้อปั่น R6 น้ำตาลไม่ได้ วาล์วบนเปิดไม่ออก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-10 00:45</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-10 05:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>4</b> ชม. 15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">44</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">ถังโมลาส SR ใบกวนลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-10 22:50</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-11 08:10</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>9</b> ชม. 20 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-B">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">45</td>
+    <td>หม้อปั่นดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">เปลี่ยนมอเตอร์เกียร์สายพาน CP-041</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-12 21:10</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-13 02:25</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>5</b> ชม. 15 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">46</td>
+    <td>ลูกหีบ A</td>
+    <td style="max-width:260px;line-height:1.4">ปั๊มน้ำอ้อยส่งหม้อต้มตัวที่ 1 ลิ่มใบปั๊มหลุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-16 09:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-16 13:15</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>3</b> ชม. 45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">47</td>
+    <td>น้ำเชื่อมรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">ท่อน้ำร้อนละลายน้ำเกลือรั่ว</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 18:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 20:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>2</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-ACKNOWLEDGED">ACKNOWLEDGED</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">48</td>
+    <td>KPP</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบราง C  KPP กากอ้อยตัน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-22 04:05</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-22 04:10</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">5 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">49</td>
+    <td>เครื่องมือควบคุม</td>
+    <td style="max-width:260px;line-height:1.4">ระบบ DCS ล่ม</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-23 18:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-23 18:15</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">50</td>
+    <td>บรรจุ</td>
+    <td style="max-width:260px;line-height:1.4">เครื่องพ่นน้ำตาล Fufiler มีเสียงดังผิดปกติ</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-19 17:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-20 07:30</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>14</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">51</td>
+    <td>ลูกหีบ C</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบอ้อยพันลูกคราดสะพานอีเลเวเตอร์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-27 14:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-27 18:05</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>3</b> ชม. 35 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">52</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">พัดลมดูดห้องตะแกรงคัดเม็ด w มีเสียงดัง</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 04:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 13:45</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>9</b> ชม. 15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">53</td>
+    <td>บรรจุ</td>
+    <td style="max-width:260px;line-height:1.4">Air Chiller trip</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 04:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 05:10</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-B">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">54</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">ไฟไลน์หม้อปั่นดับ หม้อ R9 เกิด Flash cover</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 17:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 22:02</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>4</b> ชม. 32 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">55</td>
+    <td>หม้อปั่นดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">ไฟหม้อปั่นดับ</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 17:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 18:05</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">35 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">56</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">ลูกปืนลูกกลิ้งขับสายพานท้ายหม้ออบ W3 แตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-29 23:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-30 01:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>2</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">57</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">หม้อปั่่น R9 พัดลมเป่าเสียงดัง</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-30 04:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-30 04:20</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">20 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-B">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">58</td>
+    <td>บรรจุ</td>
+    <td style="max-width:260px;line-height:1.4">สายพานห้องบรรจุทรายขาวไม่งาน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 16:05</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 17:15</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม. 10 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-B">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">59</td>
+    <td>หม้อปั่นดิบ C</td>
+    <td style="max-width:260px;line-height:1.4">หยุดปั่น A ลูกกระพ้อต้นที่ 2 ขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-31 09:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-31 10:05</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">35 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">60</td>
+    <td>ลูกหีบ A</td>
+    <td style="max-width:260px;line-height:1.4">หยุดตรวจเช็คและแก้ไขสะพานอีเลเวเตอร์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-01 05:23</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-01 06:50</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม. 27 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">61</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">แก้ไขหัววัด Brix หม้อ R6 เพี้ยน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-02 17:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-02 19:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>2</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">62</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">ตะแกรงโยกหม้ออบเกรด 3 ตัวที่ 2 แตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-04 22:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-05 02:05</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>4</b> ชม. 5 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">63</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">แก้ไขใบกวนถังโมลาส</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-12 08:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-12 11:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>2</b> ชม. 30 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">64</td>
+    <td>ลูกหีบ A</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบมอเตอร์ลูกหีบชุดที่ 1 ทริป</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-16 11:55</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-16 12:10</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">15 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">65</td>
+    <td>ลูกหีบ A</td>
+    <td style="max-width:260px;line-height:1.4">ปั๊มน้ำอ้อยส่งหม้อต้มตัวที่1 มีเสียงดัง</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-23 20:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 03:40</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>7</b> ชม. 10 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">66</td>
+    <td>ลูกหีบ B</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบแก้ไขซองเชรดเดอร์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-27 08:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-27 08:45</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">30 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">67</td>
+    <td>หม้อเคี่ยวดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">ปีมน้ำตาล C ขึ้นถังรางกวนตั้งเพลาขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-16 14:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 08:40</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>18</b> ชม. 40 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-B">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">68</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">เปลี่ยนตะแกรงหม้อปั่น R1</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-16 15:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-17 06:30</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>15</b> ชม. 30 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">69</td>
+    <td>ลูกหีบ B</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหีบสะพานข้ามชุดที่ 1ทริปอ้อยอัดท้ายสะพาน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-14 11:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-14 14:50</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>3</b> ชม. 50 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">70</td>
+    <td>หม้อเคี่ยวดิบ C</td>
+    <td style="max-width:260px;line-height:1.4">ระบบ DCS หม้อเคี่ยวการ์ด Module ET200 ชำรุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-21 04:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-21 04:40</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">5 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">71</td>
+    <td>หม้อเคี่ยวดิบ C</td>
+    <td style="max-width:260px;line-height:1.4">ปั๊มโมลาส เชื้อ A ตัวที่ 1 มีเหล็กเข้า</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-23 20:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 03:40</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>7</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">72</td>
+    <td>หม้อต้ม C</td>
+    <td style="max-width:260px;line-height:1.4">ลิ่มคัปปลิ้งเพลารางผสมน้ำโคลนรูด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-13 04:20</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-13 12:30</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>8</b> ชม. 10 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">73</td>
+    <td>หม้อต้ม C</td>
+    <td style="max-width:260px;line-height:1.4">ปั๊มน้ำอ้อยใสตัวที่ 1 ลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-18 03:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-18 04:40</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">74</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">หยุดปั่นน้ำตาลไลน์เกรด 3 เซนเซอร์หม้อ R11ไม่ทำงาน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-21 15:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-21 17:35</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>2</b> ชม. 35 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">75</td>
+    <td>หม้อต้มดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">ลูกปืนหม้อกรองตัวที่ 3 แตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-30 09:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-01-30 11:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>2</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">76</td>
+    <td>หม้อปั่นดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">หม้ออบโรตารี่ เพลาลูกกลิ้งสายพานเส้นที่ 2 ขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 06:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 17:40</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>11</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">77</td>
+    <td>หม้อต้มดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">แก้ไขปั๊มน้ำร้อน Heater ปอกเพลาหลวม</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-14 04:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-14 09:55</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>5</b> ชม. 15 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">78</td>
+    <td>หม้อปั่นดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหม้อปั่น A No.1 ระบบโปรแกรมตู้คอนโทรลมีปัญหา</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-23 04:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-SCHEDULED">SCHEDULED</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">79</td>
+    <td>คลังสินค้า</td>
+    <td style="max-width:260px;line-height:1.4">ชุดขับโรยน้ำตาลลูกกลิ้งสายพานแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-25 10:35</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-26 04:30</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>17</b> ชม. 55 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">80</td>
+    <td>หม้อปั่นดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">เพลาลูกกลิ้งสายพานเส้นที่ 2 ขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 06:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 17:50</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>11</b> ชม. 10 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-B">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">81</td>
+    <td>หม้อปั่นดิบ C</td>
+    <td style="max-width:260px;line-height:1.4">กระบอกลมปิด-เปิดเครืองชั่งน้ำตาลดิบเสีย</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 16:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 16:50</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">20 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">82</td>
+    <td>น้ำเชื่อมรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">หยุดปั๊มปูนขาวตัวที่ 4 มีเหล็กติดใบปั๊ม</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 15:30</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-24 18:20</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>2</b> ชม. 50 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-REQUEST">REQUEST</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">83</td>
+    <td>หม้อต้มดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">ปั๊มน้ำอ้อย AB ลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-26 06:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-27 02:20</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>19</b> ชม. 40 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">84</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">ลูกกลิ้งขับสายพานท้ายตะแกรงโยกเกรด 3 ไม่หมุน ลูกปืนแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-26 19:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-02-27 00:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>4</b> ชม. 45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">85</td>
+    <td>หม้อปั่นดิบ C</td>
+    <td style="max-width:260px;line-height:1.4">หม้อปั่น C ตะแกรงขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-01 17:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-01 19:00</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>2</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-SCHEDULED">SCHEDULED</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">86</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">หยุดปั่นหม้อ R7 กระพ้อมีเสียงดังโซ่กระพ้อเบียดข้าง</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-03 09:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-REQUEST">REQUEST</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">87</td>
+    <td>หม้อเคี่ยวดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">ปั๊มน้ำตาล c-mass ฝาปั๊มแตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-04 04:15</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">88</td>
+    <td>ลูกหีบ A</td>
+    <td style="max-width:260px;line-height:1.4">มอเตอร์พัดลม cooling ลูกหีบช๊อตลงกราวน์</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-04 11:00</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-04 14:09</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>3</b> ชม. 9 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+  </tr><tr class="rrow-B">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">89</td>
+    <td>หม้อปั่นดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">ปั๊มเฟืองโมลาส เข้าเพลทเพลาขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-05 07:40</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+  </tr><tr class="rrow-A">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">90</td>
+    <td>ลูกหีบ B</td>
+    <td style="max-width:260px;line-height:1.4">วงเดือนรถอ้อยดัมพ์ 9 ขาด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-07 18:20</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-07 19:15</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">55 น.</td>
+    <td><span class="rbadge A">A</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">91</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">มอเตอร์ตะแกรงโยกคัดเม็ด Trip</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-09 08:59</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-09 10:44</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม. 45 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">92</td>
+    <td>หม้อปั่นดิบ C</td>
+    <td style="max-width:260px;line-height:1.4">แก้ไขกระพ้อราง C ตัวที่ 2</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-09 13:08</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-09 13:58</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap">50 น.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">93</td>
+    <td>ลูกหีบ B</td>
+    <td style="max-width:260px;line-height:1.4">ปั๊มน้ำอ้อยขึ้นหม้อกรองตัวที่ 2 ปั๊มไม่ขึ้น</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-13 19:59</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-14 01:59</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>6</b> ชม.</td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-REQUEST">REQUEST</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">94</td>
+    <td>ไซโล</td>
+    <td style="max-width:260px;line-height:1.4">ตะแกรงคัดเม็ดน้ำตาล Out feed น้ำตาลล้นท่อ reject</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">—</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+  </tr><tr class="rrow-B">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">95</td>
+    <td>หม้อปั่นดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">หยุดหม้อปั่น CB A1-A5 ลูกกลิ้งขับสายพานฟรีและ over load trip</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-15 19:09</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-15 20:09</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>1</b> ชม.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-HISTORY">HISTORY</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">96</td>
+    <td>หม้อต้มดิบ AB</td>
+    <td style="max-width:260px;line-height:1.4">ลิ้นเช็ควาล์วน้ำอ้อยรวมหลุด</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">—</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+  </tr><tr class="rrow-B">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">97</td>
+    <td>เคี่ยวปั่นรีไฟน์</td>
+    <td style="max-width:260px;line-height:1.4">น้ำรั่วลงสายพานห้องบรรจุ 1 ตัน</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-18 04:59</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">2026-03-18 08:54</td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><b>3</b> ชม. 55 น.</td>
+    <td><span class="rbadge B">B</span></td>
+    <td><span class="badge badge-FINISHED">FINISHED</span></td>
+  </tr><tr class="rrow-C">
+    <td style="font-family:monospace;color:#94a3b8;font-size:.72rem">98</td>
+    <td>ลูกหีบ A</td>
+    <td style="max-width:260px;line-height:1.4">ลูกปืนคอเพลาปั๊มน้ำพรมชุดที่ 2 แตก</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap">—</td>
+    <td style="font-size:.74rem;color:#64748b;white-space:nowrap"><span style="color:#ef4444">ยังไม่สิ้นสุด</span></td>
+    <td style="text-align:right;font-family:monospace;font-weight:600;white-space:nowrap"><span style="color:#94a3b8">—</span></td>
+    <td><span class="rbadge C">C</span></td>
+    <td><span class="badge badge-ยังไม่เปิดIDYL">ยังไม่เปิดIDYL</span></td>
+  </tr></tbody></table></div>
   </div>
 </div>
 </main>
 
-<footer>Incident Dashboard · ข้อมูลจาก Incident_Report_2568-69.xlsx · <span id="fdate"></span></footer>
+<footer>Incident Dashboard · ข้อมูลจาก Incident_Report_2568-69.xlsx · <span id="fdate">26 มีนาคม 2569</span></footer>
 
-<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeSend()">
+<div class="modal-overlay open" id="modal-overlay" onclick="if(event.target===this)closeSend()">
   <div class="send-modal">
     <button class="send-close" onclick="closeSend()">✕</button>
     <h3>🔗 แชร์ข้อมูลให้ Viewer</h3>
@@ -483,9 +2776,9 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
         <span style="color:var(--b6)">ลิงก์เดิมจะแสดงข้อมูลล่าสุดเสมอเมื่อ Owner กดอัปเดต</span>
       </div>
       <!-- กล่องแสดงเมื่อมีไฟล์ใน GitHub Pages อยู่แล้ว -->
-      <div class="gist-exist-box" id="gist-exist-box">
+      <div class="gist-exist-box" id="gist-exist-box" style="display: block;">
         🔗 <b>มีไฟล์ใน GitHub Pages อยู่แล้ว</b> — กด <b>อัปเดต</b> เพื่อใส่ข้อมูลล่าสุด (URL เดิมใช้ได้ต่อ)<br>
-        <span id="gist-exist-url-preview" style="font-size:.7rem;opacity:.8"></span>
+        <span id="gist-exist-url-preview" style="font-size:.7rem;opacity:.8">https://kbsengineeringcenter-art.github.io/jobsheet-dashboard/incident-dashboard/Incident_Dashboard_Viewer.html</span>
       </div>
       <!-- Token input -->
       <div id="gist-token-section">
@@ -499,16 +2792,14 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
         <div style="font-size:.69rem;color:var(--g400);margin-bottom:10px">Token จะเก็บใน localStorage เครื่องนี้เท่านั้น · ไม่ส่งไปที่อื่น</div>
       </div>
       <!-- URL box -->
-      <div class="share-url-row" id="gist-url-row" style="display:none">
+      <div class="share-url-row" id="gist-url-row" style="display: flex;">
         <input type="text" id="gist-url-input" readonly="" placeholder="URL จะแสดงที่นี่หลังสร้าง Gist">
         <button class="share-action-btn green" onclick="copyGistUrl()" style="padding:8px 14px">📋 Copy URL</button>
       </div>
       <!-- Action buttons -->
       <div class="share-btn-row">
-        <button class="share-action-btn blue" id="btn-gist-push" onclick="pushGist()">
-          🚀 สร้าง / อัปเดตข้อมูล (ลิงก์เดิม)
-        </button>
-        <button class="share-action-btn green" id="btn-copy-url" onclick="copyGistUrl()" disabled="">
+        <button class="share-action-btn blue" id="btn-gist-push" onclick="pushGist()" disabled=""><span class="gist-spinner"></span> กำลังอัปโหลด...</button>
+        <button class="share-action-btn green" id="btn-copy-url" onclick="copyGistUrl()">
           📋 Copy URL
         </button>
       </div>
@@ -538,12 +2829,12 @@ footer{text-align:center;padding:16px;color:var(--g400);font-size:.74rem;border-
     <button onclick="closeSend()" style="display:block;width:100%;padding:10px;border-radius:8px;background:var(--g100);border:1px solid var(--g200);color:var(--g700);font-family:'Sarabun',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;margin-top:6px;transition:all .18s" onmouseover="this.style.background='var(--g200)'" onmouseout="this.style.background='var(--g100)'">ปิด</button>
   </div>
 </div>
-<div id="toast"></div>
+<div id="toast" class="">🔄 ล้างตัวกรองทั้งหมดแล้ว — แสดง 98 รายการ</div>
 
 <script>
 const IS_OWNER_FLAG = (typeof IS_OWNER !== 'undefined') ? IS_OWNER : true;
 // จับ source HTML ก่อนที่ DOM จะถูก modify — ใช้สร้าง Viewer
-const __SOURCE_HTML__ = document.documentElement.outerHTML;
+// __SOURCE_HTML__ ถูก fetch ใน buildViewerHtml()
 
 let uploadCount = 0;
 function handleFile(input) {
@@ -1443,7 +3734,18 @@ function saveGistToken(){
 }
 
 function buildViewerHtml(){
-  let h = __SOURCE_HTML__;
+  throw new Error('USE_ASYNC');
+}
+async function buildViewerHtmlAsync(){
+  // fetch raw HTML source ของตัวเอง
+  let h;
+  try {
+    const resp = await fetch(location.href);
+    h = await resp.text();
+  } catch(e) {
+    // fallback: outerHTML
+    h = document.documentElement.outerHTML;
+  }
 
   // 1. เปลี่ยน IS_OWNER
   h = h.replace('<'+'script>const IS_OWNER=true;<'+'/script>',
@@ -1452,28 +3754,28 @@ function buildViewerHtml(){
   // 2. ล้าง localStorage ของ Owner
   var clrScript = '<'+'script>(function(){try{["incident_gist_token","incident_gist_id","incident_gist_url"].forEach(function(k){localStorage.removeItem(k);});}catch(e){}})();<'+'/script>';
 
-  // 3. แทนที่ข้อมูล RAW แต่ละปีด้วยข้อมูลปัจจุบัน
-  // ใช้ line-based replace: หา "let RAW = [" ที่อยู่ต้นบรรทัด แล้วแทน
+  // 3. safe JSON
   function escJson(arr){
     return JSON.stringify(arr).replace(/<\/script>/gi,'<\\/script>');
   }
 
+  // 4. replace ข้อมูลแต่ละปีทีละบรรทัด
   var lines = h.split('\n');
   for(var i=0;i<lines.length;i++){
     var ln = lines[i];
-    if(ln.startsWith('let RAW = [') && RAW_ALL['6869']){
+    if(/^let RAW = \[/.test(ln) && RAW_ALL['6869'] && RAW_ALL['6869'].length>0){
       lines[i] = 'let RAW = '+escJson(RAW_ALL['6869'])+';';
-    } else if(ln.startsWith('let RAW_6768 = [') && RAW_ALL['6768']){
+    } else if(/^let RAW_6768 = \[/.test(ln) && RAW_ALL['6768'] && RAW_ALL['6768'].length>0){
       lines[i] = 'let RAW_6768 = '+escJson(RAW_ALL['6768'])+';';
-    } else if(ln.startsWith('let RAW_6566 = [') && RAW_ALL['6566']){
+    } else if(/^let RAW_6566 = \[/.test(ln) && RAW_ALL['6566'] && RAW_ALL['6566'].length>0){
       lines[i] = 'let RAW_6566 = '+escJson(RAW_ALL['6566'])+';';
-    } else if(ln.startsWith('let RAW_6667 = [') && RAW_ALL['6667']){
+    } else if(/^let RAW_6667 = \[/.test(ln) && RAW_ALL['6667'] && RAW_ALL['6667'].length>0){
       lines[i] = 'let RAW_6667 = '+escJson(RAW_ALL['6667'])+';';
     }
   }
   h = lines.join('\n');
 
-  // 4. inject clear script ก่อน </head>
+  // 5. inject clear script
   h = h.replace('<'+'/head>', clrScript+'\n'+'<'+'/head>');
 
   return h;
@@ -1490,7 +3792,7 @@ async function pushGist(){
   btn.innerHTML = '<span class="gist-spinner"></span> กำลังอัปโหลด...';
 
   try{
-    const content = buildViewerHtml();
+    const content = await buildViewerHtmlAsync();
     const contentB64 = btoa(unescape(encodeURIComponent(content)));
 
     const apiUrl = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH}`;
@@ -1623,10 +3925,10 @@ function downloadXLSX(){
   closeSend();
   showToast('✅ Export Excel แล้ว');
 }
-function generateViewer(){
+async function generateViewer(){
   // ดาวน์โหลดไฟล์ Viewer
   const ts=new Date().toISOString().slice(0,10);
-  const content=buildViewerHtml();
+  const content=await buildViewerHtmlAsync();
   const blob=new Blob([content],{type:'text/html;charset=utf-8'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
@@ -1637,4 +3939,6 @@ function generateViewer(){
 }
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
-</script></body></html>
+</script>
+
+</body></html>
