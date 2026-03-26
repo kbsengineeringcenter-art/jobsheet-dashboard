@@ -1447,46 +1447,49 @@ function saveGistToken(){
 }
 
 function buildViewerHtml(){
+  // สร้าง HTML โดย inject script ที่ override data ก่อน DOMContentLoaded
   let h = __SOURCE_HTML__;
 
   // 1. เปลี่ยน IS_OWNER
   h = h.replace('<'+'script>const IS_OWNER=true;<'+'/script>',
                 '<'+'script>const IS_OWNER=false;<'+'/script>');
 
-  // 2. ล้าง localStorage ของ Owner
-  var clrScript = '<'+'script>(function(){try{["incident_gist_token","incident_gist_id","incident_gist_url"].forEach(function(k){localStorage.removeItem(k);});}catch(e){}})();<'+'/script>';
-
-  // 3. safe JSON
+  // 2. ล้าง localStorage ของ Owner + override RAW data ทันทีก่อน script อื่น
   function escJson(arr){
     return JSON.stringify(arr).replace(/<\/script>/gi,'<\\/script>');
   }
 
-  // 4. replace โดยหาจาก marker comment แล้ว replace บรรทัดถัดไป
-  function replaceRawLine(src, marker, newLine){
-    var idx = src.indexOf(marker);
-    if(idx < 0) return src;
-    // หา newline หลัง marker
-    var nl = src.indexOf('\n', idx);
-    if(nl < 0) return src;
-    // บรรทัดถัดไปเริ่มต้น let RAW... จนถึง ;
-    var lineStart = nl + 1;
-    var lineEnd = src.indexOf(';\n', lineStart);
-    if(lineEnd < 0) lineEnd = src.indexOf(';', lineStart);
+  var overrideScript = '<'+'script>'
+    + '(function(){'
+    + 'try{["incident_gist_token","incident_gist_id","incident_gist_url"].forEach(function(k){localStorage.removeItem(k);});}catch(e){}'
+    + '})();'
+    + '<'+'/script>';
+
+  // 3. inject ก่อน </head>
+  h = h.replace('<'+'/head>', overrideScript+'\n'+'<'+'/head>');
+
+  // 4. หา let RAW = [...]; ใน h แล้ว replace
+  // ใช้ indexOf แบบ exact เพื่อหลีกเลี่ยงปัญหา regex
+  function replaceDecl(src, varName, newData){
+    var needle = varName + ' = [';
+    var idx = src.indexOf(needle);
+    if(idx < 0){ console.warn('marker not found:',varName); return src; }
+    // หาจุดเริ่มต้นของบรรทัด (backtrack ถึง \n)
+    var lineStart = src.lastIndexOf('\n', idx) + 1;
+    // หาจุดสิ้นสุดของ declaration (];)
+    var lineEnd = src.indexOf(';', idx);
     if(lineEnd < 0) return src;
-    return src.slice(0, lineStart) + newLine + src.slice(lineEnd + 1);
+    return src.slice(0,lineStart) + varName + ' = ' + escJson(newData) + ';' + src.slice(lineEnd+1);
   }
 
   if(RAW_ALL['6869'] && RAW_ALL['6869'].length > 0)
-    h = replaceRawLine(h, '/*__RAW_6869_START__*/', 'let RAW = '+escJson(RAW_ALL['6869'])+';');
+    h = replaceDecl(h, 'let RAW', RAW_ALL['6869']);
   if(RAW_ALL['6768'] && RAW_ALL['6768'].length > 0)
-    h = replaceRawLine(h, '/*__RAW_6768_START__*/', 'let RAW_6768 = '+escJson(RAW_ALL['6768'])+';');
+    h = replaceDecl(h, 'let RAW_6768', RAW_ALL['6768']);
   if(RAW_ALL['6566'] && RAW_ALL['6566'].length > 0)
-    h = replaceRawLine(h, '/*__RAW_6566_START__*/', 'let RAW_6566 = '+escJson(RAW_ALL['6566'])+';');
+    h = replaceDecl(h, 'let RAW_6566', RAW_ALL['6566']);
   if(RAW_ALL['6667'] && RAW_ALL['6667'].length > 0)
-    h = replaceRawLine(h, '/*__RAW_6667_START__*/', 'let RAW_6667 = '+escJson(RAW_ALL['6667'])+';');
-
-  // 5. inject clear script
-  h = h.replace('<'+'/head>', clrScript+'\n'+'<'+'/head>');
+    h = replaceDecl(h, 'let RAW_6667', RAW_ALL['6667']);
 
   return h;
 }
