@@ -876,11 +876,14 @@ document.addEventListener('mouseup',()=>{setTimeout(()=>{syncPaused=false;},1000
 function populateSelect(id, items, labelFn) {
   const sel = document.getElementById(id);
   if (!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">ทั้งหมด</option>';
   items.forEach(v => {
     const o = document.createElement('option');
     o.value = v; o.text = labelFn ? labelFn(v) : v;
     sel.appendChild(o);
   });
+  if (cur) sel.value = cur;
 }
 
 // ===== FILTERS =====
