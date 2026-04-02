@@ -757,16 +757,28 @@ function rebuildSelects() {
   const years   = [...new Set(ALL_DATA.map(d=>d['ปี']).filter(y=>y>=2000&&y<=2100))].sort((a,b)=>a-b);
   const depts   = [...new Set(ALL_DATA.map(d=>d['ฝ่าย']).filter(Boolean))].sort();
   const persons = [...new Set(ALL_DATA.map(d=>d['ผู้รับผิดชอบ']).filter(Boolean))].sort();
-  const repop = (id, items, fn) => {
+  const repop = (id, items, fn, defaultLabel='ทั้งหมด') => {
     const sel = document.getElementById(id); if(!sel) return;
     const cur = sel.value;
-    sel.innerHTML = '<option value="">ทั้งหมด</option>';
+    sel.innerHTML = '<option value="">' + defaultLabel + '</option>';
     items.forEach(v => { const o=document.createElement('option'); o.value=v; o.text=fn?fn(v):v; sel.appendChild(o); });
     sel.value = cur;
   };
-  repop('f-year',   years.filter(y=>y>0), y=>'ปี '+y);
+  const yFn = y => 'ปี ' + y;
+  const yFiltered = years.filter(y=>y>0);
+  repop('f-year',   yFiltered, yFn);
   repop('f-dept',   depts);
-  repop('f-person', persons);
+  repop('f-person', persons, null, 'ทุกคน');
+  repop('ds-year',  yFiltered, yFn);
+  repop('fd-year',  yFiltered, yFn);
+  // calendar year
+  const calSel = document.getElementById('cal-year');
+  if (calSel) {
+    const prev = calSel.value;
+    calSel.innerHTML = '';
+    yFiltered.forEach(y => { const o=document.createElement('option'); o.value=y; o.text='ปี '+y; calSel.appendChild(o); });
+    calSel.value = prev || yFiltered[yFiltered.length-1];
+  }
 }
 
 
@@ -876,11 +888,14 @@ document.addEventListener('mouseup',()=>{setTimeout(()=>{syncPaused=false;},1000
 function populateSelect(id, items, labelFn) {
   const sel = document.getElementById(id);
   if (!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">ทั้งหมด</option>';
   items.forEach(v => {
     const o = document.createElement('option');
     o.value = v; o.text = labelFn ? labelFn(v) : v;
     sel.appendChild(o);
   });
+  if (cur) sel.value = cur;
 }
 
 // ===== FILTERS =====
