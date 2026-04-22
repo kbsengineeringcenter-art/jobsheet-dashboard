@@ -907,8 +907,24 @@ let _autoSyncTimer = null;
 let _autoSyncInFlight = false;
 
 function setSyncBadge(state, text) {
-  const b = document.getElementById('auto-sync-badge');
-  if (!b) return;
+  let b = document.getElementById('auto-sync-badge');
+  if (!b) {
+    // Badge หายไป (โดน init() ล้าง topbar-sub ด้วย textContent) → สร้างใหม่
+    const sub = document.getElementById('topbar-sub');
+    if (!sub) return;
+    // Restore "🔑 Owner" indicator ด้วย ถ้าไม่มี
+    if (!sub.querySelector('.topbar-owner-pill')) {
+      const pill = document.createElement('span');
+      pill.className = 'topbar-owner-pill';
+      pill.style.cssText = 'background:#fef3c7;color:#92400e;font-size:.7rem;padding:2px 8px;border-radius:20px;font-weight:700;margin-left:8px';
+      pill.textContent = '🔑 Owner';
+      sub.appendChild(pill);
+    }
+    b = document.createElement('span');
+    b.id = 'auto-sync-badge';
+    b.style.cssText = 'font-size:.7rem;padding:2px 8px;border-radius:20px;font-weight:700;margin-left:6px';
+    sub.appendChild(b);
+  }
   const colors = {
     pending:  ['#fef3c7', '#92400e'],  // เหลือง
     syncing:  ['#dbeafe', '#1e40af'],  // น้ำเงิน
@@ -1066,6 +1082,12 @@ function init() {
       if (btn) btn.classList.add('active-toggle');
       // mark active pane สำหรับ print
       document.getElementById('pane-overview').classList.add('active-pane');
+      // แสดง sync badge เริ่มต้น ให้รู้ว่าระบบพร้อมใช้งาน
+      if (localStorage.getItem(GIST_ID_KEY)) {
+        setSyncBadge('success', '✅ พร้อม sync (auto เมื่อมีการเปลี่ยนแปลง)');
+      } else {
+        setSyncBadge('pending', '⚠️ ยังไม่ได้ sync — กด "🔗 แชร์" สร้าง URL ครั้งแรก');
+      }
     });
   });
 }
@@ -2675,22 +2697,4 @@ function updateMonthlyCompare() {
       </div>
       <div>
         <label style="font-size:.8rem;color:var(--muted)">วันที่แล้วเสร็จ (DD/MM/YYYY)</label>
-        <input id="af-donedate" type="text" placeholder="เช่น 15/06/2026" style="width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-family:Sarabun;font-size:.9rem;box-sizing:border-box">
-      </div>
-      <div>
-        <label style="font-size:.8rem;color:var(--muted)">สถานะ</label>
-        <select id="af-status" style="width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-family:Sarabun;font-size:.9rem">
-          <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
-          <option value="แล้วเสร็จ">แล้วเสร็จ</option>
-        </select>
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;margin-top:18px;justify-content:flex-end">
-      <button onclick="closeModal('modal-add')" style="padding:8px 18px;border:1px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;font-family:Sarabun">ยกเลิก</button>
-      <button onclick="saveAdd()" style="padding:8px 20px;border:none;border-radius:8px;background:#16a34a;color:#fff;cursor:pointer;font-family:Sarabun;font-weight:600">➕ เพิ่มรายการ</button>
-    </div>
-  </div>
-</div>
-
-</body>
-</html>
+        <input id="af-donedate" type="text" placeholder="เช่น 15/06/2026" 
