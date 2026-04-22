@@ -30,19 +30,32 @@ jobs:
         run: |
           mkdir -p dist
           cp -r . dist/ 2>/dev/null || true
+
+          # ---- Inject token (ทั้ง Owner และ Viewer ใช้ placeholder ตัวเดียวกัน) ----
           sed -i "s|__GITHUB_TOKEN__|${{ secrets.GIST_TOKEN }}|g" dist/JobSheet_Owner.html
+          sed -i "s|__GITHUB_TOKEN__|${{ secrets.GIST_TOKEN }}|g" dist/JobSheet_Viewer.html
+
+          # ---- Inject build timestamp (เฉพาะ Owner — ใช้ตรวจ cache invalidation) ----
           BUILD_TS=$(date +%s%3N)
           sed -i "s|const HTML_BUILT_AT = [0-9]*;|const HTML_BUILT_AT = ${BUILD_TS};|g" dist/JobSheet_Owner.html
-          echo "✅ Injected token and build timestamp: ${BUILD_TS}"
+          echo "✅ Injected token (Owner+Viewer) and build timestamp: ${BUILD_TS}"
 
       - name: Verify injection (safe check)
         run: |
+          FAIL=0
           if grep -q "__GITHUB_TOKEN__" dist/JobSheet_Owner.html; then
-            echo "❌ ERROR: Token was NOT injected. Check if secret GIST_TOKEN is set."
-            exit 1
-          else
-            echo "✅ Token injected successfully"
+            echo "❌ ERROR: Token NOT injected in JobSheet_Owner.html"
+            FAIL=1
           fi
+          if grep -q "__GITHUB_TOKEN__" dist/JobSheet_Viewer.html; then
+            echo "❌ ERROR: Token NOT injected in JobSheet_Viewer.html"
+            FAIL=1
+          fi
+          if [ $FAIL -eq 1 ]; then
+            echo "Check if secret GIST_TOKEN is set in repo settings (Settings → Secrets and variables → Actions)"
+            exit 1
+          fi
+          echo "✅ Token injected successfully in both files"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
